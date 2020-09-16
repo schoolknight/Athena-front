@@ -19,6 +19,7 @@
     <![endif]-->
     <script src="{{url_for('static', filename='jquery-3.5.1.min.js')}}"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="{{url_for('static', filename='echarts.min.js')}}"></script>
     <script src="{{url_for('static', filename='bootstrap/bootstrap.min.js')}}"></script>
   </head>
   <body>
@@ -68,9 +69,117 @@
       </div>
       <div class="col-md-1"></div>
       <!-- 右边 -->
-      <div class="col-md-6 right-area container">.col-md-4</div>
+      <div class="col-md-6 right-area container">
+        <div class="chart-area" id="main_chart"></div>
+        <div>
+            test
+        </div>
+      </div>
       <div class="col-md-1"></div>
     </div>
     
+    <script type="text/javascript">
+      // 基于准备好的dom，初始化echarts实例
+      var myChart = echarts.init(document.getElementById('main_chart'));
+
+      // 指定图表的配置项和数据
+      var option = {
+    tooltip: {},
+    animationDurationUpdate: 1500,
+    animationEasingUpdate: 'quinticInOut',
+    series: [
+        {
+            type: 'graph',
+            layout: 'none',
+            symbol:"roundRect",
+            symbolSize: 150,
+            label: {
+                show: true,
+                fontSize:30
+            },
+            edgeSymbol: ['circle', 'arrow'],
+            edgeSymbolSize: [4, 10],
+            edgeLabel: {
+                fontSize: 50
+            },
+            data: [{
+                name: 'hospital',
+                value:10,
+                x: 100,
+                y: 250,
+                itemStyle:{
+                    color:'#6699CC'
+                },
+                label:{
+                  formatter: "{b}\n{c}%"  
+                },
+                tooltip:{
+                    formatter:'{b} process {c}%'
+                }
+                
+            }, {
+                name: 'patient',
+                value: 10,
+                x: 300,
+                y: 250,
+                itemStyle:{
+                    color:'#006699'
+                },
+                label:{
+                  formatter: "{b}\n{c}%"  
+                },
+                tooltip:{
+                    formatter:'{b} process {c}%'
+                }
+            }, {
+                name: 'research',
+                x: 200,
+                y: 150,
+                itemStyle:{
+                    color:'#000000'
+                }
+            }],
+            // links: [],
+            links: [{
+                source: 0,
+                target: 1,
+                symbolSize: [5, 20],
+                lineStyle: {
+                    width: 5,
+                    curveness: -0.2
+                }
+            },{
+                source: 1,
+                target: 2,
+                symbolSize: [5, 20],
+                lineStyle: {
+                    width: 5,
+                    curveness: -0.2
+                }
+            },{
+                source: 2,
+                target: 0,
+                symbolSize: [5, 20],
+                lineStyle: {
+                    width: 5,
+                    curveness: -0.2
+                }
+            },
+            
+            ],
+            lineStyle: {
+                opacity: 0.9,
+                width: 2,
+                curveness: 0
+            }
+        }
+    ]
+};
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    </script>
+
+
   </body>
 </html>
