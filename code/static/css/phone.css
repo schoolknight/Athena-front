@@ -1,0 +1,7 @@
+.placeholder {
+    margin: 5px;
+    padding: 10px;
+    background-color: var(--weui-BG-1);
+    text-align: center;
+    color: var(--weui-FG-1);
+}

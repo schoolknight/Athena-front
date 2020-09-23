@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <link href="{{url_for('static', filename='css/phone.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='weui/weui.min.css')}}" rel="stylesheet">
+    <script src="{{url_for('static', filename='weui/weui.min.js')}}"></script>
+
+    
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="{{url_for('static', filename='zepto.min.js')}}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    
+  </head>
+  <body>
+    <div class="page">
+        <div class="page__hd">
+            <h1 class="page__title">患者界面</h1>
+        </div>
+        <div class="page__bd page__bd_spacing">
+            {% for item in list %}
+                {% if item.t == 0%}
+                    <div class="weui-flex">
+                        <div class="weui-flex__item">
+                            <div class="placeholder">
+                                <div class="weui-panel weui-panel_access">
+                                    <div class="weui-panel__hd">合约请求{{item.id}}</div>
+                                    <div class="weui-panel__bd">
+                                        <div class="weui-media-box weui-media-box_text">
+                                            <h4 class="weui-media-box__title">来源：xxx</h4>
+                                            <p class="weui-media-box__desc">合约详情</p>
+                                        </div> 
+                                    </div>
+                                    <div class="weui-panel__ft">
+                                        <a href="javascript:showDialog({{item.id}});" class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
+                                            <div class="weui-cell__bd">处理合约</div>
+                                            <span class="weui-cell__ft"></span>
+                                        </a>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {%endif%}
+            {% endfor %}
+            
+        </div>
+    </div>
+    <div id="dialogs">
+    <div class="js_dialog" id="iosDialog2" style="display: none;">
+        <div class="weui-mask"></div>
+        <div id="js_dialog_2" class="weui-half-screen-dialog">
+            <div class="weui-half-screen-dialog__hd">
+              <div class="weui-half-screen-dialog__hd__side">
+                <button style="display: none;" class="weui-icon-btn">返回<i class="weui-icon-back-arrow-thin"></i></button>
+                <button class="weui-icon-btn">关闭<i class="weui-icon-close-thin"></i></button>
+              </div>
+              <div class="weui-half-screen-dialog__hd__main">
+                <strong class="weui-half-screen-dialog__title">合约</strong>
+                <span class="weui-half-screen-dialog__subtitle">合约</span>
+              </div>
+             
+            </div>
+            <div class="weui-half-screen-dialog__bd">
+              <p class="weui-half-screen-dialog__desc">
+                是否授权
+              </p>
+            </div>
+            <div class="weui-half-screen-dialog__ft">
+                <a href="javascript:" class="weui-btn weui-btn_primary">同意</a>
+                <a href="javascript:" class="weui-btn weui-btn_default">拒绝</a>               
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+        $(function(){
+            var $dialog2 = $('#js_dialog_2'),
+                $iosDialog2 = $('#iosDialog2');
+    
+            $('#dialogs').on('click', '.weui-mask', function(){
+                $(this).parents('.js_dialog').fadeOut(200);
+                $dialog2.removeClass('weui-half-screen-dialog_show');
+            });
+              
+            
+            
+        });
+        function showDialog(tarId){
+            var $dialog2 = $('#js_dialog_2'),
+                $iosDialog2 = $('#iosDialog2');
+                $iosDialog2.fadeIn(200);
+                $dialog2.addClass('weui-half-screen-dialog_show');
+            };
+        
+    </script>
+  </body>
+</html>
