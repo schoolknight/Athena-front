@@ -1,16 +1,19 @@
 from flask import Flask
 from flask import render_template
-import configparser
+#import configparser
 import pymongo
 app = Flask(__name__)
 
 
 # mongodb connnection
-conf= configparser.ConfigParser()
-conf.read('./server.conf')
-uri = conf.get("mongodb", "uri")
-database_str = conf.get("mongodb", "database")
-data_col_str = conf.get("mongodb", "data_col")
+
+f = open('server.conf')
+lines = f.readlines()
+f.close()
+
+uri = lines[0].strip()
+database_str = lines[1].strip()
+data_col_str = lines[2].strip()
 mongo = pymongo.MongoClient(uri)
 data_col = mongo[database_str][data_col_str]
 
