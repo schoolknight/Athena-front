@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import render_template
 #import configparser
 import pymongo
+import time
 app = Flask(__name__)
 
 
@@ -14,11 +15,21 @@ f.close()
 uri = lines[0].strip()
 database_str = lines[1].strip()
 data_col_str = lines[2].strip()
+deal_col_str = lines[3].strip()
 mongo = pymongo.MongoClient(uri)
 data_col = mongo[database_str][data_col_str]
+deal_col = mongo[database_str][deal_col_str]
 
+@app.route('/get_deals')
+def getDeals():
+    deal_list = deal_col.find({'status':0})
+    res = []
+    for item in deal_list:
+        item['_id'] = str(item['_id'])
+        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        res.append(item)
+    return jsonify(res)
 
-patient_deal_list = [{'id':0,'t': 0}]
 
 @app.route('/dashboard')
 def dashBoard():
