@@ -8,7 +8,7 @@
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
   <title>Athena Service</title>
 
-  
+
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="../static/mdb/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
@@ -188,50 +188,57 @@
               <h5 class="card-title">Filters</h5>
               <div class="row">
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="hospital-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose hospital</option>
-                    <option value="1">BH1</option>
-                    <option value="2">BH2</option>
-                    <option value="3">BH3</option>
+                    <option value=0>BH1</option>
+                    <option value=1>BH2</option>
+                    <option value=2>BH3</option>
                   </select>
                   <label class="mdb-main-label">BH stands for Beijing Hospitals</label>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="department-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose department</option>
-                    <option value="1">Internal Medicine</option>
-                    <option value="2">Surgery2</option>
+                    <option value=0>Internal Medicine</option>
+                    <option value=1>Surgery2</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="disease-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose disease</option>
-                    <option value="1">Diabetes</option>
-                    <option value="2">Heart Disease</option>
+                    <option value=0>Diabetes</option>
+                    <option value=1>Heart Disease</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="gender-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
+                    <option value=0>Male</option>
+                    <option value=1>Female</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="w-100"></div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="age_range-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose age range</option>
-                    <option value="1">&lt18</option>
-                    <option value="2">18-35</option>
-                    <option value="2">35-55</option>
-                    <option value="2">55-70</option>
-                    <option value="2">&gt70</option>
+                    <option value=0>&lt20</option>
+                    <option value=1>20-30</option>
+                    <option value=2>30-40</option>
+                    <option value=3>40-50</option>
+                    <option value=4>50-60</option>
+                    <option value=5>60-70</option>
+                    <option value=6>&gt70</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col"></div>
@@ -239,7 +246,7 @@
                 <div class="col"></div>
 
                 <div class="col">
-                  <button class="btn btn-info btn-sm">Search</button>
+                  <button id="data-search" class="btn btn-info btn-sm">Search</button>
                 </div>
 
               </div>
@@ -280,105 +287,7 @@
                       <td>25-30</td>
                       <td>0x3edbcag09tfa</td>
                     </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
+                    <!-- to be filled with javascript -->
                   </tbody>
                   <tfoot>
                     <tr>
@@ -418,51 +327,54 @@
               <h5 class="card-title">Filters</h5>
               <div class="row">
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="regionOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose region</option>
-                    <option value="1">Beijing-west-1</option>
-                    <option value="2">Beijing-west-2</option>
-                    <option value="3">Beijing-east</option>
+                    <option value=0>Beijing-west-1</option>
+                    <option value=1>Beijing-west-2</option>
+                    <option value=2>Beijing-east</option>
                   </select>
                   <label class="mdb-main-label">Computatation infrastructure region</label>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="coreOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose core number</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">4</option>
+                    <option value=0>1</option>
+                    <option value=1>2</option>
+                    <option value=2>4</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="memOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose memory size</option>
-                    <option value="1">8G</option>
-                    <option value="2">16G</option>
-                    <option value="3">64G</option>
+                    <option value=0>8G</option>
+                    <option value=1>16G</option>
+                    <option value=2>64G</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="functionOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose function instance</option>
                     <optgroup label="Statistics">
-                      <option value="1">Distribution</option>
-                      <option value="2">SUM</option>
-                      <option value="3">Median</option>
+                      <option value=0>Distribution</option>
+                      <option value=1>SUM</option>
+                      <option value=2>Median</option>
                     </optgroup>
                     <optgroup label="ML Training">
-                      <option value="4">Linear Regression</option>
-                      <option value="5">Logistic Regression</option>
+                      <option value=3>Linear Regression</option>
+                      <option value=4>SVM</option>
                     </optgroup>
                     <optgroup label="ML Inference">
-                      <option value="4">SVM</option>
+                      <option value=5>Linear Model-S1</option>
                       </option>
-                      <option value="5">ResNet</option>
                     </optgroup>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="w-100"></div>
@@ -474,47 +386,55 @@
                 <div class="col"></div>
 
                 <div class="col">
-                  <button class="btn btn-info btn-sm">Search</button>
+                  <button class="btn btn-info btn-sm" data-toggle="collapse" href="#fee-collapse" aria-expanded="false" aria-controls="fee-collapse">Price Detail</button>
                 </div>
 
               </div>
             </div>
+            <div class="collapse" id="fee-collapse">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Computation Price/min</th>
+                    <th>Data Transmission Price/GB</th>
+                    <th>Function Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Instance 1</th>
+                    <td>40 [Beijing-west-1, 1core, 8GB]</td>
+                    <td>80</td>
+                    <td>5 [Distribution]</td>
+                  </tr>
+                  <tr>
+                </tbody>
+              </table>
+            </div>
           </section>
           <!--/ Section Filter -->
 
-          <!-- Section Result -->
+          <!-- Section Input Coloumn -->
           <section>
             <div class="card-body">
-              <h5 class="card-title">Results</h5>
-              <div class="table-ui p-2 mb-3 mx-4 mb-5">
-                <table id="function-record-table" class="table" cellspacing="0" width="100%">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th class="th-sm">Region
-                      </th>
-                      <th class="th-sm">Cores
-                      </th>
-                      <th class="th-sm">Memory
-                      </th>
-                      <th class="th-sm">Function Instance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td>Beijing-west-1</td>
-                      <td>2</td>
-                      <td>16GB</td>
-                      <td>Linear Regression</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <h5 class="card-title">Input coloumn</h5>
+              <select id="coloumn-option"class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                <option value="" disabled selected>Choose Input Coloumns</option>
+                <option value="0">bmi - Body Mass Index</option>
+                <option value="1">bp - Average Blood Pressure)</option>
+                <option value="2">s1 - T-Cells</option>
+                <option value="3">s2 - Low-density lipoproteins</option>
+                <option value="3">s3 - High-density lipoproteins</option>
+                <option value="3">s4 - Thyroid Stimulating hormone</option>
+                <option value="3">s5 - Lamotrigine </option>
+                <option value="3">s6 - Blood Sugar Level</option>
+              </select>
+              <label class="mdb-main-label">Diabetes dataset is using</label>
+              <button class="btn-save btn btn-primary btn-sm">Save</button>
             </div>
           </section>
-          <!--/ Section Result -->
+          <!--/ Section Input Coloumn -->
 
         </div>
       </section>
@@ -522,150 +442,152 @@
 
       <!-- Section: Security -->
       <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
-          <div class="card border-secondary mb-3">
-            <div class="card-header">3.Please select your security configurations</div>
-            <div class="card-body">
-              <h5 class="card-title">Characteristics</h5>
-              <!-- Security options -->
-              <div class="row">
-                <div class="col">
-                  <p>Data Scrubbing
-                    <a href="#" data-toggle="tooltip" title="Guarantee delete-after-use property for raw data"><i class="far fa-question-circle"></i></a>
-                  </p>
-                </div>
-                <div class="col">
-                  <div class="switch">
-                    <label>
-                      Off
-                      <input type="checkbox" unchecked>
-                      <span class="lever"></span> On
-                    </label>
-                  </div>
-                </div>
-
-                <div class="w-100"></div>
-
-
-                <div class="col">
-                  <p>Differential Privacy
-                    <a href="#" data-toggle="tooltip" title="Add noise to the generated model"><i class="far fa-question-circle"></i></a>
-                  </p>
-                </div>
-                <div class="col">
-                  <div class="switch">
-                    <label>
-                      Off
-                      <input type="checkbox" unchecked>
-                      <span class="lever"></span> On
-                    </label>
-                  </div>
-                </div>
-
-                <div class="w-100"></div>
-
-                <div class="col">
-                  <p>Result Sealing
-                    <a href="#" data-toggle="tooltip" title="Use encryption for result transferring"><i class="far fa-question-circle"></i></a>
-                  </p>
-                </div>
-                <div class="col">
-                  <div class="switch">
-                    <label>
-                      Off
-                      <input type="checkbox" checked>
-                      <span class="lever"></span> On
-                    </label>
-                  </div>
-                </div>
-
+        <div class="card border-secondary mb-3">
+          <div class="card-header">3.Please select your security configurations</div>
+          <div class="card-body">
+            <h5 class="card-title">Characteristics</h5>
+            <!-- Security options -->
+            <div class="row">
+              <div class="col">
+                <p>Data Scrubbing
+                  <a href="#" data-toggle="tooltip" title="Guarantee delete-after-use property for raw data"><i class="far fa-question-circle"></i></a>
+                </p>
               </div>
+              <div class="col">
+                <div class="switch">
+                  <label>
+                    Off
+                    <input type="checkbox" unchecked>
+                    <span class="lever"></span> On
+                  </label>
+                </div>
+              </div>
+
+              <div class="w-100"></div>
+
+
+              <div class="col">
+                <p>Differential Privacy
+                  <a href="#" data-toggle="tooltip" title="Add noise to the generated model"><i class="far fa-question-circle"></i></a>
+                </p>
+              </div>
+              <div class="col">
+                <div class="switch">
+                  <label>
+                    Off
+                    <input type="checkbox" unchecked>
+                    <span class="lever"></span> On
+                  </label>
+                </div>
+              </div>
+
+              <div class="w-100"></div>
+
+              <div class="col">
+                <p>Result Sealing
+                  <a href="#" data-toggle="tooltip" title="Use encryption for result transferring"><i class="far fa-question-circle"></i></a>
+                </p>
+              </div>
+              <div class="col">
+                <div class="switch">
+                  <label>
+                    Off
+                    <input id="seal-option" type="checkbox" checked>
+                    <span class="lever"></span> On
+                  </label>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
-      </section>
-      <!--/ Section: Security -->
+    </div>
+    </section>
+    <!--/ Section: Security -->
 
-      <!-- Service confirm -->
-      <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ServiceCart">Launch Service</button>
-        <!--/ Button trigger modal -->
-        <!-- Modal: modalCart -->
-        <div class="modal fade" id="ServiceCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <!--Header-->
-              <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <!--Body-->
-              <div class="modal-body">
+    <!-- Service confirm -->
+    <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceCart" onclick="renderCart()">Launch Service</button>
+      <!--/ Button trigger modal -->
 
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Entity</th>
-                      <th>Data/Service</th>
-                      <th>Price</th>
-                      <th>Remove</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Beijing 1</td>
-                      <td>100 rec</td>
-                      <td>100 MDS</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Beijing 1</td>
-                      <td>100 rec</td>
-                      <td>100 MDS</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Beijing 1</td>
-                      <td>100 rec</td>
-                      <td>100 MDS</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Computation unit</td>
-                      <td>Linear regression</td>
-                      <td>100 10MDS/min</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr class="total">
-                      <th scope="row">5</th>
-                      <td>Total</td>
-                      <td>
+      <!-- Modal: modalCart -->
+      <div class="modal fade" id="serviceCart" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+              <h4 class="modal-title" id="cartModalLabel">Your service cart</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
 
-                      <td>400$</td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
+              <table id="cart-table" class="table table-hover">
+                <!-- rendered by javascript -->
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Hospital</th>
+                    <th>Data/Function</th>
+                    <th>Price</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Beijing 1</td>
+                    <td>100 rec</td>
+                    <td>100 MDS</td>
+                    <td><a><i class="fas fa-times"></i></a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Beijing 1</td>
+                    <td>100 rec</td>
+                    <td>100 MDS</td>
+                    <td><a><i class="fas fa-times"></i></a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Beijing 1</td>
+                    <td>100 rec</td>
+                    <td>100 MDS</td>
+                    <td><a><i class="fas fa-times"></i></a></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>Computation unit</td>
+                    <td>Linear regression</td>
+                    <td>100 10MDS/min</td>
+                    <td><a><i class="fas fa-times"></i></a></td>
+                  </tr>
+                  <tr class="total">
+                    <th scope="row">5</th>
+                    <td>Total</td>
+                    <td>
 
-              </div>
-              <!--Footer-->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary">Checkout</button>
-              </div>
+                    <td>400$</td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary">Checkout</button>
             </div>
           </div>
         </div>
-        <!--/ Modal: modalCart -->
-      </section>
-      <!--/ Service confirm -->
+      </div>
+      <!--/ Modal: modalCart -->
+    </section>
+    <!--/ Service confirm -->
 
     </div>
 
@@ -673,23 +595,19 @@
 
 
   <script type="text/javascript">
+    // Option List
+    hospitalOption = ["BH1", "BH2", "BH3", "BH4"];
+    regionOption = ["Beijing-west-1", "Beijing-west-2", "Beijing-east"];
+    coreOption = ["1", "2", "4"];
+    memOption = ["8G", "16G", "64G"];
+    functionOption = ["Distribution", "SUM", "Median", "Linear Regression", "SVM", "Linear Model-S1"];
+    functionFee = [5, 5, 5, 10, 20, 10];
+
+    // Service detail
+
+
     $(document).ready(function() {
       $('#health-record-table').dataTable({
-
-        columnDefs: [{
-          orderable: false,
-          className: 'select-checkbox select-checkbox-all',
-          targets: 0
-        }],
-        select: {
-          style: 'multi',
-          selector: 'td:first-child'
-        }
-      });
-    });
-
-    $(document).ready(function() {
-      $('#function-record-table').dataTable({
 
         columnDefs: [{
           orderable: false,
@@ -707,6 +625,15 @@
       $('.mdb-select').materialSelect();
     });
 
+    $(document).ready(function() {
+      $('#data-search').click(function() {
+
+        //collectDataFilter();
+
+        // loading data
+        loadData();
+      });
+    });
 
     // Tooltips Initialization
     $(function() {
@@ -715,6 +642,59 @@
 
     // Sidenav Initialization
     $(".button-collapse").sideNav();
+
+    // Render service cart
+    function renderCart(){
+      console.log("calling renderCart");
+      hosNum = $('#hospital-option').val().length;
+      console.log(hosNum);
+      cartDetailStr = "";
+      $('#cart-table').html(cartDetailStr);
+    }
+  </script>
+
+
+
+  <script type="text/javascript">
+    const dataBody = document.querySelector("#health-record-table > tbody");
+
+    function loadData() {
+      const request = new XMLHttpRequest();
+      request.open("get", "api/data");
+      request.onload = () => {
+        try {
+          const json = JSON.parse(request.responseText);
+          populateData(json);
+        } catch (e) {
+          console.warn("Cloud not load medical data!");
+        }
+      };
+
+      request.send();
+    }
+
+    function populateData(json) {
+      // Clear existing records
+      while (dataBody.firstChild) {
+        dataBody.removeChild(dataBody.firstChild);
+      }
+
+      // Populate table
+      json.forEach((row) => {
+        const tr = document.createElement("tr");
+
+        emptytd = document.createElement("td");
+        tr.appendChild(emptytd);
+
+        row.forEach((cell) => {
+          const td = document.createElement("td");
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+
+        dataBody.appendChild(tr);
+      });
+    }
   </script>
 
 </body>

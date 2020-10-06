@@ -1,11 +1,10 @@
+import os
 from flask import Flask
 from flask import render_template
+from flask import json, url_for, jsonify
 #import configparser
 import pymongo
 app = Flask(__name__)
-
-
-# mongodb connnection
 
 f = open('server.conf')
 lines = f.readlines()
@@ -14,9 +13,16 @@ f.close()
 uri = lines[0].strip()
 database_str = lines[1].strip()
 data_col_str = lines[2].strip()
+deal_col_str = lines[3].strip()
 mongo = pymongo.MongoClient(uri)
 data_col = mongo[database_str][data_col_str]
+deal_col = mongo[database_str][deal_col_str]
 
+server_dir = os.path.dirname(__file__)
+data_rel_path = "data.json"
+data_path = os.path.join(server_dir, data_rel_path)
+order_path = os.path.join(server_dir, "order.json")
+print(order_path)
 
 patient_deal_list = [{'id':0,'t': 0}]
 
@@ -60,6 +66,26 @@ def athena_login():
 @app.route('/athena-test')
 def athena_test():
         return render_template('v-4.html')
+
+@app.route('/api/order', methods=['GET'])
+def getOrders():
+    orders = json.load(open(order_path))
+    return jsonify(orders)
+
+@app.route('/api/data', methods=['GET'])
+def getData():
+    data = json.load(open(data_path))
+    return jsonify(data)
+
+
+# @app.route('/api/balance', methods=['GET'])
+# def getBalance():
+#     res = []
+#     for item in balance:
+#         #processing
+#         res.append(item)
+# return jsonify(res)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
