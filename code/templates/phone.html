@@ -37,19 +37,26 @@
                                     <div class="weui-panel__hd">Active Contract : {{item._id}}</div>
                                     <div class="weui-panel__bd">
                                         <div class="weui-media-box weui-media-box_text">
-                                            <h4 class="weui-media-box__title">Created At: {{patient_id}}</h4>
-                                            <p class="weui-media-box__desc">Balance: {{item.patient[patient_id]}}</p>
+                                            <h4 class="weui-media-box__title">Issue Time: {{item.issue_time}}</h4>
+                                            <p class="weui-media-box__desc">Balance: {{item.issue_time}}</p>
                                         </div> 
                                     </div>
                                     <div class="weui-panel__ft">
-                                        {%if item.patient[patient_id] == 0 %}
+                                        {%if item.patient_permit == 0 %}
                                             <a href="javascript:showDialog('{{item._id}}');" class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
                                                 <div class="weui-cell__bd">Operate</div>
                                                 <span class="weui-cell__ft"></span>
                                             </a>
-                                        {% else %}
+                                        {% endif %}
+                                        {%if item.patient_permit == 1 %}
                                         <div class="weui-cell weui-cell_active">
-                                            <div class="weui-cell__bd">Finished</div>
+                                            <div class="weui-cell__bd">Accepted</div>
+                                            <span class="weui-cell__ft"></span>
+                                        </div>
+                                        {% endif %} 
+                                        {%if item.patient_permit == 2 %}
+                                        <div class="weui-cell weui-cell_active">
+                                            <div class="weui-cell__bd">Denied</div>
                                             <span class="weui-cell__ft"></span>
                                         </div>
                                         {% endif %} 
@@ -100,7 +107,14 @@
                 $(this).parents('.js_dialog').fadeOut(200);
                 $dialog2.removeClass('weui-half-screen-dialog_show');
             });
-            
+            var if_toast = {{if_toast}};
+            if (if_toast == 1){
+                weui.toast('New Contract', 3000);
+            }
+
+            setTimeout(() => {
+                window.location.href = "/phone/{{deal_list | length}}";
+            }, 10000);
             
         });
 
@@ -113,7 +127,7 @@
             $dialog2.addClass('weui-half-screen-dialog_show');
         };
         function patientOperate(opType){
-            $.get('/patient_operate?deal=' + curId + '&op=' + opType + '&patient={{patient_id}}', function(){
+            $.get('/patient_operate?deal=' + curId + '&op=' + opType, function(){
                 window.location.reload();
             });
         }

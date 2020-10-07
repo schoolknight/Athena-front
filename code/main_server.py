@@ -25,11 +25,11 @@ deal_col = mongo[database_str][deal_col_str]
 
 @app.route('/get_deals')
 def getDeals():
-    deal_list = deal_col.find({'status':0})
+    deal_list = deal_col.find({})
     res = []
     for item in deal_list:
         item['_id'] = str(item['_id'])
-        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        #item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
         res.append(item)
     return jsonify(res)
 
@@ -38,42 +38,45 @@ def getDeals():
 def dashBoard():
     return render_template('dashboard.html')
 
-@app.route('/phone/<tar_id>')
-def phone(tar_id):
+@app.route('/phone/<num>')
+def phone(num):
     deal_list = deal_col.find()
     res = []
     for item in deal_list:
         item['_id'] = str(item['_id'])
-        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        #item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
         res.append(item)
-    return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
+    if int(num) > 0 and len(res) > int(num):
+        return render_template('phone.html',deal_list=res, if_toast=1)
+    else:
+        return render_template('phone.html',deal_list=res, if_toast=0) 
 
-@app.route('/hospital/<tar_id>')
-def phone(tar_id):
+@app.route('/hospital/<num>')
+def hospital(num):
     deal_list = deal_col.find()
     res = []
     for item in deal_list:
         item['_id'] = str(item['_id'])
-        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        #item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
         res.append(item)
-    return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
-
-
+    if int(num) > 0 and len(res) > int(num):
+        return render_template('hospital.html',deal_list=res, if_toast=1)
+    else:
+        return render_template('hospital.html',deal_list=res, if_toast=0)
 
 @app.route('/patient_operate')
-def patientOpeerate():
+def patientOperate():
     deal_id = request.args.get('deal')
-    patient_id = int(request.args.get('patient'))
     op_type = int(request.args.get('op')) + 1
-
-    update_item = {}
-    update_item['patient.'+ str(patient_id)] = op_type
-    print(update_item)
-    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':update_item})
+    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type}})
     return 'ok'
 
-
-
+@app.route('/hospital_operate')
+def hospitalOperate():
+    deal_id = request.args.get('deal')
+    op_type = int(request.args.get('op')) + 1
+    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
+    return 'ok'
 
 
 @app.route('/athena')
