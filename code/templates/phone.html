@@ -25,55 +25,40 @@
   <body>
     <div class="page">
         <div class="page__hd">
-            <h1 class="page__title">患者界面</h1>
+            <h1 class="page__title">Patient</h1>
         </div>
         <div class="page__bd page__bd_spacing">
-            {% for item in list %}
-                {% if item.t == 0%}
+            {% for item in deal_list %}
+                 
                     <div class="weui-flex">
                         <div class="weui-flex__item">
                             <div class="placeholder">
                                 <div class="weui-panel weui-panel_access">
-                                    <div class="weui-panel__hd">合约请求{{item.id}}</div>
+                                    <div class="weui-panel__hd">Active Contract : {{item._id}}</div>
                                     <div class="weui-panel__bd">
                                         <div class="weui-media-box weui-media-box_text">
-                                            <h4 class="weui-media-box__title">来源：xxx</h4>
-                                            <p class="weui-media-box__desc">合约详情</p>
+                                            <h4 class="weui-media-box__title">Created At: {{patient_id}}</h4>
+                                            <p class="weui-media-box__desc">Balance: {{item.patient[patient_id]}}</p>
                                         </div> 
                                     </div>
                                     <div class="weui-panel__ft">
-                                        <a href="javascript:showDialog({{item.id}});" class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
-                                            <div class="weui-cell__bd">处理合约</div>
+                                        {%if item.patient[patient_id] == 0 %}
+                                            <a href="javascript:showDialog('{{item._id}}');" class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
+                                                <div class="weui-cell__bd">Operate</div>
+                                                <span class="weui-cell__ft"></span>
+                                            </a>
+                                        {% else %}
+                                        <div class="weui-cell weui-cell_active">
+                                            <div class="weui-cell__bd">Finished</div>
                                             <span class="weui-cell__ft"></span>
-                                        </a>    
+                                        </div>
+                                        {% endif %} 
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {%endif%}
-                {% if item.t == 1 or item.t == 2 %}
-                <div class="weui-flex">
-                    <div class="weui-flex__item">
-                        <div class="placeholder">
-                            <div class="weui-panel weui-panel_access">
-                                <div class="weui-panel__hd">合约请求{{item.id}}</div>
-                                <div class="weui-panel__bd">
-                                    <div class="weui-media-box weui-media-box_text">
-                                        {% if item.t == 1%}
-                                            <h4 class="weui-media-box__title">同意</h4>
-                                        {% else %}
-                                            <h4 class="weui-media-box__title">拒绝</h4>
-                                        {% endif  %}
-                                    </div> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-
-
+                
             {% endfor %}
             
         </div>
@@ -85,27 +70,28 @@
             <div class="weui-half-screen-dialog__hd">
               <div class="weui-half-screen-dialog__hd__side">
                 <button style="display: none;" class="weui-icon-btn">返回<i class="weui-icon-back-arrow-thin"></i></button>
-                <button class="weui-icon-btn">关闭<i class="weui-icon-close-thin"></i></button>
+                <button style="display: none;" class="weui-icon-btn" id="close_button">Close<i class="weui-icon-close-thin"></i></button>
               </div>
               <div class="weui-half-screen-dialog__hd__main">
-                <strong class="weui-half-screen-dialog__title">合约</strong>
-                <span class="weui-half-screen-dialog__subtitle">合约</span>
+                <strong class="weui-half-screen-dialog__title">Smart Contract</strong>
+                <span class="weui-half-screen-dialog__subtitle" id='dialog_contract_id'></span>
               </div>
              
             </div>
             <div class="weui-half-screen-dialog__bd">
               <p class="weui-half-screen-dialog__desc">
-                是否授权
+                Agree or Not?
               </p>
             </div>
             <div class="weui-half-screen-dialog__ft">
-                <a href="javascript:sendMsgAgree();" class="weui-btn weui-btn_primary">同意</a>
-                <a href="javascript:sendMsgDeny();" class="weui-btn weui-btn_default">拒绝</a>               
+                <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_primary">Agree</a>
+                <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_default">Deny</a>               
             </div>
         </div>
     </div>
     </div>
     <script type="text/javascript">
+        var curId = "";
         $(function(){
             var $dialog2 = $('#js_dialog_2'),
                 $iosDialog2 = $('#iosDialog2');
@@ -114,27 +100,23 @@
                 $(this).parents('.js_dialog').fadeOut(200);
                 $dialog2.removeClass('weui-half-screen-dialog_show');
             });
-              
             
             
         });
-        function sendMsgAgree(){
-            $.get('/patient_agree', function(response){
-                 location.reload();
-            });
-        }
-        function sendMsgDeny(){
-            $.get('/patient_deny', function(response){
-                 location.reload();
-            });
-        }
 
         function showDialog(tarId){
+            curId = tarId;
+            $('#dialog_contract_id').text(tarId);
             var $dialog2 = $('#js_dialog_2'),
                 $iosDialog2 = $('#iosDialog2');
-                $iosDialog2.fadeIn(200);
-                $dialog2.addClass('weui-half-screen-dialog_show');
-            };
+            $iosDialog2.fadeIn(200);
+            $dialog2.addClass('weui-half-screen-dialog_show');
+        };
+        function patientOperate(opType){
+            $.get('/patient_operate?deal=' + curId + '&op=' + opType + '&patient={{patient_id}}', function(){
+                window.location.reload();
+            });
+        }
         
     </script>
   </body>
