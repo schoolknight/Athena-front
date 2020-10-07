@@ -77,6 +77,10 @@ def getData():
     data = json.load(open(data_path))
     return jsonify(data)
 
+@app.route('/api/service', methods=['POST'])
+def postService():
+    print("serviceJSON received!")
+
 
 # @app.route('/api/balance', methods=['GET'])
 # def getBalance():

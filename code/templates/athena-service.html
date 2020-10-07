@@ -327,7 +327,7 @@
               <h5 class="card-title">Filters</h5>
               <div class="row">
                 <div class="col">
-                  <select id="regionOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="region-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose region</option>
                     <option value=0>Beijing-west-1</option>
                     <option value=1>Beijing-west-2</option>
@@ -338,7 +338,7 @@
                 </div>
 
                 <div class="col">
-                  <select id="coreOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="core-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose core number</option>
                     <option value=0>1</option>
                     <option value=1>2</option>
@@ -348,7 +348,7 @@
                 </div>
 
                 <div class="col">
-                  <select id="memOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="mem-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose memory size</option>
                     <option value=0>8G</option>
                     <option value=1>16G</option>
@@ -358,7 +358,7 @@
                 </div>
 
                 <div class="col">
-                  <select id="functionOption" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="function-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose function instance</option>
                     <optgroup label="Statistics">
                       <option value=0>Distribution</option>
@@ -386,7 +386,7 @@
                 <div class="col"></div>
 
                 <div class="col">
-                  <button class="btn btn-info btn-sm" data-toggle="collapse" href="#fee-collapse" aria-expanded="false" aria-controls="fee-collapse">Price Detail</button>
+                  <button class="btn btn-info btn-sm" data-toggle="collapse" href="#fee-collapse" aria-expanded="false" aria-controls="fee-collapse" onclick="renderFuncPrice()">Price Detail</button>
                 </div>
 
               </div>
@@ -406,7 +406,7 @@
                     <th scope="row">Instance 1</th>
                     <td>40 [Beijing-west-1, 1core, 8GB]</td>
                     <td>80</td>
-                    <td>5 [Distribution]</td>
+                    <td id="func"></td>
                   </tr>
                   <tr>
                 </tbody>
@@ -419,16 +419,16 @@
           <section>
             <div class="card-body">
               <h5 class="card-title">Input coloumn</h5>
-              <select id="coloumn-option"class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+              <select id="coloumn-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                 <option value="" disabled selected>Choose Input Coloumns</option>
-                <option value="0">bmi - Body Mass Index</option>
-                <option value="1">bp - Average Blood Pressure)</option>
-                <option value="2">s1 - T-Cells</option>
-                <option value="3">s2 - Low-density lipoproteins</option>
-                <option value="3">s3 - High-density lipoproteins</option>
-                <option value="3">s4 - Thyroid Stimulating hormone</option>
-                <option value="3">s5 - Lamotrigine </option>
-                <option value="3">s6 - Blood Sugar Level</option>
+                <option value=0>bmi - Body Mass Index</option>
+                <option value=1>bp - Average Blood Pressure)</option>
+                <option value=2>s1 - T-Cells</option>
+                <option value=3>s2 - Low-density lipoproteins</option>
+                <option value=4>s3 - High-density lipoproteins</option>
+                <option value=5>s4 - Thyroid Stimulating hormone</option>
+                <option value=6>s5 - Lamotrigine </option>
+                <option value=7>s6 - Blood Sugar Level</option>
               </select>
               <label class="mdb-main-label">Diabetes dataset is using</label>
               <button class="btn-save btn btn-primary btn-sm">Save</button>
@@ -457,7 +457,7 @@
                 <div class="switch">
                   <label>
                     Off
-                    <input type="checkbox" unchecked>
+                    <input id="scrub-option" type="checkbox" unchecked>
                     <span class="lever"></span> On
                   </label>
                 </div>
@@ -475,7 +475,7 @@
                 <div class="switch">
                   <label>
                     Off
-                    <input type="checkbox" unchecked>
+                    <input id="dp-option" type="checkbox" unchecked>
                     <span class="lever"></span> On
                   </label>
                 </div>
@@ -527,60 +527,13 @@
 
               <table id="cart-table" class="table table-hover">
                 <!-- rendered by javascript -->
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Hospital</th>
-                    <th>Data/Function</th>
-                    <th>Price</th>
-                    <th>Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Beijing 1</td>
-                    <td>100 rec</td>
-                    <td>100 MDS</td>
-                    <td><a><i class="fas fa-times"></i></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Beijing 1</td>
-                    <td>100 rec</td>
-                    <td>100 MDS</td>
-                    <td><a><i class="fas fa-times"></i></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Beijing 1</td>
-                    <td>100 rec</td>
-                    <td>100 MDS</td>
-                    <td><a><i class="fas fa-times"></i></a></td>
-                  </tr>
-                  <tr>
-                    <th scope="row">4</th>
-                    <td>Computation unit</td>
-                    <td>Linear regression</td>
-                    <td>100 10MDS/min</td>
-                    <td><a><i class="fas fa-times"></i></a></td>
-                  </tr>
-                  <tr class="total">
-                    <th scope="row">5</th>
-                    <td>Total</td>
-                    <td>
-
-                    <td>400$</td>
-                    <td></td>
-                  </tr>
-                </tbody>
               </table>
 
             </div>
             <!--Footer-->
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-              <button class="btn btn-primary">Checkout</button>
+              <button class="btn btn-primary" data-dismiss="modal" onclick="sendTransaction()">Checkout</button>
             </div>
           </div>
         </div>
@@ -596,15 +549,29 @@
 
   <script type="text/javascript">
     // Option List
-    hospitalOption = ["BH1", "BH2", "BH3", "BH4"];
-    regionOption = ["Beijing-west-1", "Beijing-west-2", "Beijing-east"];
-    coreOption = ["1", "2", "4"];
-    memOption = ["8G", "16G", "64G"];
-    functionOption = ["Distribution", "SUM", "Median", "Linear Regression", "SVM", "Linear Model-S1"];
-    functionFee = [5, 5, 5, 10, 20, 10];
+    const hospitalOption = ["BH1", "BH2", "BH3", "BH4"];
+    const regionOption = ["Beijing-west-1", "Beijing-west-2", "Beijing-east"];
+    const functionOption = ["Distribution", "SUM", "Median", "Linear Regression", "SVM", "Linear Model-S1"];
+    const functionFee = [5, 5, 5, 10, 20, 10];
 
-    // Service detail
+    // Table Body
+    const dataBody = document.querySelector("#health-record-table > tbody");
 
+    // Service Detail
+    // service_id & issue_time handle to flask
+    var service = {
+      hospitals: [],
+      record_total: 0,
+      record_num: [],
+      func: 0,
+      func_fee: 0,
+      fixed_fee: 0,
+      security: {
+        scrub: "",
+        dp: "",
+        seal: ""
+      }
+    }
 
     $(document).ready(function() {
       $('#health-record-table').dataTable({
@@ -627,10 +594,7 @@
 
     $(document).ready(function() {
       $('#data-search').click(function() {
-
-        //collectDataFilter();
-
-        // loading data
+        // LoadData Into Table
         loadData();
       });
     });
@@ -643,24 +607,135 @@
     // Sidenav Initialization
     $(".button-collapse").sideNav();
 
+    // Render Price cartDetail
+    function renderFuncPrice() {
+      var funcPriceStr = "";
+      var func = parseInt($('#function-option').val(), 10);
+      funcPriceStr += functionOption[func] + ' ' + functionFee[func];
+      $('#func').html(funcPriceStr);
+    }
+
     // Render service cart
-    function renderCart(){
+    function renderCart() {
+
       console.log("calling renderCart");
-      hosNum = $('#hospital-option').val().length;
-      console.log(hosNum);
-      cartDetailStr = "";
+
+      collectOptions();
+
+      var cartDetailStr = "";
+      var hospitalStr = "";
+      var hosNum = service.record_num.length;
+      for (var i = 0; i < hosNum; i++) {
+        hospitalStr += '<tr><th scope="row">' + (i + 1).toString() +
+          '</th><td>' + hospitalOption[i] +
+          '</td><td>' + (service.record_num[i]).toString() + ' rec' +
+          '</td><td>' + (service.record_num[i] * 0.5).toString() +
+          '</td><td><a><i class="fas fa-times"></i></a></td></tr>';
+      }
+
+      console.log(hospitalStr);
+
+      cartDetailStr += '<thead>\
+                        <tr>\
+                          <th>#</th>\
+                          <th>Participant</th>\
+                          <th>Data/Function</th>\
+                          <th>Price(MDS)</th>\
+                          <th>Remove</th>\
+                        </tr>\
+                      </thead>\
+                      <tbody>' + hospitalStr +
+        '<tr><th scope="row">' + (i++).toString() +
+        '</th><td>Infrastructure</td>' +
+        '<td>' + functionOption[service.func] +
+        '</td><td>' + (service.func_fee).toString() + ', 40/min' +
+        '</td><td><a><i class="fas fa-times"></i></a></td></tr>' +
+        '<tr class="total"><th scope="row">' + (i++).toString() +
+        '</th><td>Fixed Fee</td><td></td>' +
+        '<td>' + (service.fixed_fee).toString() +
+        '</td><td></td></tr></tbody>'
+
+
+
+
+
       $('#cart-table').html(cartDetailStr);
     }
-  </script>
+
+    function collectOptions() {
+
+      console.log("calling collectOptions");
+
+      var hospitals = $('#hospital-option').val();
+
+      service.hospitals = hospitals.map(x => parseInt(x, 10));
+
+      //record_total
+      service.record_total = 300;
+
+      var hosNum = service.hospitals.length;
+
+      for (var i = 0; i < hosNum; i++) {
+        service.record_num[i] = service.record_total / hosNum;
+      }
+      service.func = parseInt($('#function-option').val(), 10);
+
+      service.func_fee = functionFee[service.func];
+      service.fixed_fee = service.record_total * 0.5 + service.func_fee;
+
+      //service.security
+      if (document.getElementById('scrub-option').checked) {
+        //Switch On
+        service.security.scrub = "On";
+      } else {
+        service.security.scrub = "Off";
+      }
+
+      if (document.getElementById('dp-option').checked) {
+        service.security.dp = "On";
+      } else {
+        service.security.dp = "Off";
+      }
+
+      if (document.getElementById('seal-option').checked) {
+        service.security.seal = "On";
+      } else {
+        service.security.seal = "Off";
+      }
+
+      console.log(JSON.stringify(service));
 
 
+    }
 
-  <script type="text/javascript">
-    const dataBody = document.querySelector("#health-record-table > tbody");
+    function getData(){
+
+
+    }
 
     function loadData() {
+
+      var filter={
+        hospitals: [],
+        department: 0,
+        disease: 0,
+        gender: 0,
+        age_range: []
+      }
+      var hospitals = $('#hospital-option').val();
+      var age_range = $('#age_range-option').val();
+
+      filter.hospitals = hospitals.map(x => parseInt(x, 10));
+      filter.age_range = age_range.map(x => parseInt(x, 10));
+      filter.department = parseInt($('#department-option').val(), 10);
+      filter.disease = parseInt($('#disease-option').val(), 10);
+      filter.gender = parseInt($('#gender-option').val(), 10);
+
+      var filterJSON = JSON.stringify(filter);
+
       const request = new XMLHttpRequest();
-      request.open("get", "api/data");
+      request.open("get", "api/data", true);
+      request.setRequestHeader("Content-Type", "application/json");
       request.onload = () => {
         try {
           const json = JSON.parse(request.responseText);
@@ -670,7 +745,7 @@
         }
       };
 
-      request.send();
+      request.send(filterJSON);
     }
 
     function populateData(json) {
@@ -694,6 +769,15 @@
 
         dataBody.appendChild(tr);
       });
+    }
+
+    function sendTransaction() {
+      var serviceJSON = JSON.stringify(service);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/service", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(serviceJSON);
+      console.log("serviceJSON sended!");
     }
   </script>
 
