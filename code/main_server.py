@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import os
 from flask import Flask
+=======
+from flask import Flask, jsonify, request
+>>>>>>> upstream/master
 from flask import render_template
 from flask import json, url_for, jsonify
 #import configparser
 import pymongo
+import time
+from bson import ObjectId
 app = Flask(__name__)
 
 f = open('server.conf')
@@ -24,20 +30,47 @@ data_path = os.path.join(server_dir, data_rel_path)
 order_path = os.path.join(server_dir, "order.json")
 print(order_path)
 
-patient_deal_list = [{'id':0,'t': 0}]
+
+@app.route('/get_deals')
+def getDeals():
+    deal_list = deal_col.find({'status':0})
+    res = []
+    for item in deal_list:
+        item['_id'] = str(item['_id'])
+        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        res.append(item)
+    return jsonify(res)
+
 
 @app.route('/dashboard')
 def dashBoard():
     return render_template('dashboard.html')
 
-@app.route('/phone')
-def phone():
-    return render_template('phone.html',list=patient_deal_list)
+@app.route('/phone/<tar_id>')
+def phone(tar_id):
+    deal_list = deal_col.find()
+    res = []
+    for item in deal_list:
+        item['_id'] = str(item['_id'])
+        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        res.append(item)
+    return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
 
-@app.route('/patient_agree')
-def aptientAgree():
-    patient_deal_list.append({'id':len(patient_deal_list), 't':1})
+@app.route('/patient_operate')
+def patientOpeerate():
+    deal_id = request.args.get('deal')
+    patient_id = int(request.args.get('patient'))
+    op_type = int(request.args.get('op')) + 1
+
+    update_item = {}
+    update_item['patient.'+ str(patient_id)] = op_type
+    print(update_item)
+    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':update_item})
     return 'ok'
+
+
+
+
 
 @app.route('/athena')
 def athena():
