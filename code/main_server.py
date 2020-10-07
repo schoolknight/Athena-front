@@ -18,5 +18,10 @@ def aptientAgree():
     patient_deal_list.append({'id':len(patient_deal_list), 't':1})
     return 'ok'
 
+@app.route('/patient_deny')
+def aptientDeny():
+    patient_deal_list.append({'id':len(patient_deal_list), 't':2})
+    return 'ok'
+
 if __name__ == '__main__':    
     app.run(debug=True)    

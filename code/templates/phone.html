@@ -52,6 +52,28 @@
                         </div>
                     </div>
                 {%endif%}
+                {% if item.t == 1 or item.t == 2 %}
+                <div class="weui-flex">
+                    <div class="weui-flex__item">
+                        <div class="placeholder">
+                            <div class="weui-panel weui-panel_access">
+                                <div class="weui-panel__hd">合约请求{{item.id}}</div>
+                                <div class="weui-panel__bd">
+                                    <div class="weui-media-box weui-media-box_text">
+                                        {% if item.t == 1%}
+                                            <h4 class="weui-media-box__title">同意</h4>
+                                        {% else %}
+                                            <h4 class="weui-media-box__title">拒绝</h4>
+                                        {% endif  %}
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+
             {% endfor %}
             
         </div>
@@ -77,8 +99,8 @@
               </p>
             </div>
             <div class="weui-half-screen-dialog__ft">
-                <a href="javascript:" class="weui-btn weui-btn_primary">同意</a>
-                <a href="javascript:" class="weui-btn weui-btn_default">拒绝</a>               
+                <a href="javascript:sendMsgAgree();" class="weui-btn weui-btn_primary">同意</a>
+                <a href="javascript:sendMsgDeny();" class="weui-btn weui-btn_default">拒绝</a>               
             </div>
         </div>
     </div>
@@ -96,6 +118,17 @@
             
             
         });
+        function sendMsgAgree(){
+            $.get('/patient_agree', function(response){
+                 location.reload();
+            });
+        }
+        function sendMsgDeny(){
+            $.get('/patient_deny', function(response){
+                 location.reload();
+            });
+        }
+
         function showDialog(tarId){
             var $dialog2 = $('#js_dialog_2'),
                 $iosDialog2 = $('#iosDialog2');
