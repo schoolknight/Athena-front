@@ -48,6 +48,18 @@ def phone(tar_id):
         res.append(item)
     return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
 
+@app.route('/hospital/<tar_id>')
+def phone(tar_id):
+    deal_list = deal_col.find()
+    res = []
+    for item in deal_list:
+        item['_id'] = str(item['_id'])
+        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        res.append(item)
+    return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
+
+
+
 @app.route('/patient_operate')
 def patientOpeerate():
     deal_id = request.args.get('deal')
