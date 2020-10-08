@@ -49,7 +49,7 @@ def phone(tar_id):
     return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
 
 @app.route('/hospital/<tar_id>')
-def phone(tar_id):
+def hospital(tar_id):
     deal_list = deal_col.find()
     res = []
     for item in deal_list:
