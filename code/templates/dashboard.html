@@ -418,18 +418,30 @@
             }
           }]
         };
-        var totalHospital = 0;
-        for (var i in item.hospital){
-          totalHospital += item.hospital[i];
+        //var totalHospital = 0;
+        //for (var i in item.hospital){
+          //totalHospital += item.hospital[i];
+        //}
+        
+        //option.series[0].data[0].value = totalHospital * 100 / item.hospital.length;
+        //console.log(totalHospital * 100 / item.hospital.length);
+        if (item.hospital_permit == 1){
+          option.series[0].data[0].value = 100;
+        }else{
+          option.series[0].data[0].value = 0;
         }
-        option.series[0].data[0].value = totalHospital * 100 / item.hospital.length;
-        console.log(totalHospital * 100 / item.hospital.length);
-        var totalPatient = 0;
-        for (var i in item.patient){
-          totalPatient += item.patient[i];
+        //var totalPatient = 0;
+        //for (var i in item.patient){
+          //totalPatient += item.patient[i];
+        //}
+        //option.series[0].data[1].value = totalPatient * 100 / item.patient.length;
+        //console.log(totalPatient * 100 / item.patient.length);
+        if (item.patient_permit == 1){
+          option.series[0].data[1].value =  100;
+        }else{
+          option.series[0].data[1].value =  0;
         }
-        option.series[0].data[1].value = totalPatient * 100 / item.patient.length;
-        console.log(totalPatient * 100 / item.patient.length);
+        
         myChart.setOption(option);
       }
 
@@ -441,8 +453,8 @@
           if (i == currentButton){
             buttonStr += '<button type="button" class="btn btn-success" onclick="showDeal(' + i + ')">' + item['_id'] + '</button>\n';
             var detailStr = '<h5 class="card-title">Contract : ' + item['_id'] + '</h5>\n';
-            detailStr += '<p class="card-text">Data Number:' + item['dataNum'] +  '</p>';
-            detailStr += '<p class="card-text">Created At:' + item['createdAt'] +  '</p>';
+            detailStr += '<p class="card-text">Data Number:' + item['record_total'] +  '</p>';
+            detailStr += '<p class="card-text">Created At:' + item['issue_time'] +  '</p>';
             $('#contract_detail').html(detailStr);
             setChart(item);              
           }else{
@@ -457,8 +469,8 @@
           buttonList.eq(currentButton).removeClass('btn-success');
           buttonList.eq(tarId).addClass('btn-success');
           var detailStr = '<h5 class="card-title">Contract : ' + deal_list[tarId]['_id'] + '</h5>\n';
-          detailStr += '<p class="card-text">Data Number:' + deal_list[tarId]['dataNum'] +  '</p>';
-          detailStr += '<p class="card-text">Created At:' + deal_list[tarId]['createdAt'] +  '</p>';
+          detailStr += '<p class="card-text">Data Number:' + deal_list[tarId]['record_total'] +  '</p>';
+          detailStr += '<p class="card-text">Created At:' + deal_list[tarId]['issue_time'] +  '</p>';
           $('#contract_detail').html(detailStr);
           setChart(deal_list[tarId]);
           currentButton = tarId;
