@@ -9,7 +9,7 @@
   <title>Athena console</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="../static/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
@@ -19,7 +19,7 @@
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="../static/css/athena.css">
   <!-- MDBootstrap Datatables  -->
-  <link href="../static/css/addons/datatables2.min.css" rel="stylesheet">
+  <link href="../static/mdb/addons/datatables2.min.css" rel="stylesheet">
 
   <!-- jQuery -->
   <script type="text/javascript" src="../static/jquery.min.js"></script>
@@ -32,9 +32,8 @@
   <!-- MDBootstrap Datatables  -->
   <script type="text/javascript" src="../static/mdb/addons/datatables2.min.js"></script>
 
-
-
 </head>
+
 
 <body class="fixed-sn light-blue-skin">
   <header>
@@ -78,7 +77,7 @@
                 <ul class="list-unstyled">
                   <li><a href="athena-service" class="waves-effect">Issue service</a>
                   </li>
-                  <li><a href="athena-order" class="waves-effect">My Orders</a>
+                  <li><a href="athena-balance" class="waves-effect">My balance</a>
                   </li>
                 </ul>
               </div>
@@ -172,7 +171,7 @@
         <div class="row">
 
           <!-- Grid column -->
-          <div class="col-xl-4 col-md-6 mb-xl-0 mb-4">
+          <div class="col-xl-6 col-md-6 mb-xl-0 mb-4">
 
             <!-- Card -->
             <div class="card card-cascade cascading-admin-card">
@@ -184,16 +183,17 @@
                   <p class="text-uppercase" align="center">Balance</p>
 
                   <h4 id="balance" class="font-weight-bold dark-grey-text" align="center"> </h4>
-                  <!--<h4 class="font-weight-bold dark-grey-text" align="center">-->   <!--</h4>-->
+                  <!--<h4 class="font-weight-bold dark-grey-text" align="center">-->
+                  <!--</h4>-->
                 </div>
               </div>
 
               <!--&lt;!&ndash; Card content &ndash;&gt;-->
               <!--<div class="card-body card-body-cascade">-->
-                <!--<div class="progress mb-3">-->
-                  <!--<div class="progress-bar bg-primary" role="progressbar" style="width: 14%" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>-->
-                <!--</div>-->
-                <!--<p class="card-text">Monthly grow(14%)</p>-->
+              <!--<div class="progress mb-3">-->
+              <!--<div class="progress-bar bg-primary" role="progressbar" style="width: 14%" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100"></div>-->
+              <!--</div>-->
+              <!--<p class="card-text">Monthly grow(14%)</p>-->
               <!--</div>-->
 
             </div>
@@ -218,7 +218,7 @@
               <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"><i class="fas fa-columns mt-0"></i></button>
             </div>
 
-            <a href="" class="white-text mx-3">Balance Overview</a></a>
+            <a href="" class="white-text mx-3">balance List</a>
 
             <div>
               <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2"><i class="fas fa-pencil-alt mt-0"></i></button>
@@ -232,109 +232,90 @@
               <!-- Table -->
               <table id="balance-table" class="table table-hover">
 
-              <!-- dynamically rendered -->
+                <!-- dynamically rendered -->
               </table>
             </div>
           </div>
         </div>
       </section>
       <!-- Section Table -->
-
-
     </div>
   </main>
 
+  <script type="text/javascript">
+    var balance_list = [];
+    var used_total_fee = 0;
+    var start_balance = 10000;
 
-  <script>
+    function get_balance() {
+      now = start_balance - used_total_fee;
+      balance_str = now.toString();
+      $('#balance').html(balance_str);
+    }
+
+    function refreshbalance() {
+      $.getJSON("/api/balance", function(result) {
+        for (var i in result) {
+          var item = result[i];
+          var tmpFlag = 0;
+          for (var j in balance_list) {
+            if (item['service_id'] == balance_list[j]['service_id']) {
+              tmpFlag = 1;
+              break;
+            }
+          }
+          if (tmpFlag == 0) { // a new balance
+            refreshFlag = 1;
+            break;
+          }
+        }
+
+        balance_list = result;
+        updatePage();
+      });
+    }
+
+    function updatePage() {
+      var balance_tr = [];
+      used_total_fee = 0;
+      var tableStr = '<thead><tr>\
+                    <th scope="col">Service ID</th>\
+                    <th scope="col">Issue Time</th>\
+                    <th scope="col">hospital_fee</th>\
+                    <th scope="col">func_fee</th>\
+                    <th scope="col">exec_fee</th>\
+                    <th scope="col">total_fee</th>\
+                    </tr></thead><tbody>';
+      for (var i in balance_list) {
+        var item = balance_list[i];
+        var hospitalStr = "";
+        var resbuttonStr = "";
+        var hos_fee = "";
+        used_total_fee += Number(item['total_fee']);
+
+        for (var fee in item['hospital_fee']) {
+          hos_fee += item['hospitals'][fee] + ":" + item['hospital_fee'][fee] + ",  ";
+        }
+        hos_fee = hos_fee.substr(0, hos_fee.length - 3)
+      }
+
+      for (var i in balance_tr) {
+        tableStr += balance_tr[i];
+      }
+      tableStr += '</tbody>';
+
+      $('#balance-table').html(tableStr);
+    }
+
     // Sidenav Initialization
     $(".button-collapse").sideNav();
-  </script>
 
-  <script type="text/javascript">
+    refreshbalance();
 
-  var balance_list = [];
-  var used_total_fee = 0;
-  var start_balance = 10000;
-
-  function get_balance(){
-   now = start_balance - used_total_fee;
-   balance_str = now.toString();
-   $('#balance').html(balance_str);
-  }
-
- function refreshbalance(){
-   $.getJSON("/api/balance", function(result){
-     for(var i in result) {
-       var item = result[i];
-       var tmpFlag = 0;
-       for (var j in balance_list) {
-         if (item['service_id'] == balance_list[j]['service_id']){
-           tmpFlag = 1;
-           break;
-         }
-       }
-       if (tmpFlag == 0){ // a new balance
-         refreshFlag = 1;
-         break;
-       }
-     }
-
-     balance_list = result;
-     if (refreshFlag > 0){
-       updatePage();
-     }
-
-
-   });
- }
-
- function updatePage(){
-   var balance_tr = [];
-   used_total_fee = 0;
-   var tableStr = '<thead><tr>\
-                   <th scope="col">Service ID</th>\
-                   <th scope="col">Issue Time</th>\
-                   <th scope="col">Hospital Fee</th>\
-                   <th scope="col">Func Fee</th>\
-                   <th scope="col">Execution Fee</th>\
-                   <th scope="col">Total Fee</th>\
-                   </tr></thead><tbody>';
-   for (var i in balance_list) {
-     var item = balance_list[i];
-     var hospitalStr = "";
-     var hos_fee = "";
-
-     used_total_fee += Number(item['total_fee']);
-
-     for (var fee in item['hospital_fee']){
-       hos_fee += item['hospitals'][fee] + ":" + item['hospital_fee'][fee] + ",  ";
-     }
-     hos_fee = hos_fee.substr(0, hos_fee.length - 3)
-
-     balance_tr[i] = '<tr><td>' + item['service_id'] + '</td><td>' +
-                                item['issue_time'] + '</td><td>' +
-                                hos_fee + '</td><td>' +
-                                item['func_fee'] + '</td><td>' +
-                                item['exec_fee'] + '</td><td>' +
-                                item['total_fee'] + '</td><td>'+
-                                '</td></tr>';
-   }
-
-   for (var i in balance_tr) {
-     tableStr += balance_tr[i];
-   }
-   tableStr += '</tbody>';
-
-   $('#balance-table').html(tableStr);
- }
-
-
-  refreshbalance();
-
- setInterval(()=> {
-   refreshbalance();
-   get_balance()
- }, 10000);
+    setInterval(() => {
+      refreshbalance();
+      get_balance()
+    }, 10000);
   </script>
 </body>
 
