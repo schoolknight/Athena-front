@@ -8,7 +8,10 @@
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
   <title>Athena Service</title>
 
-  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="../static/mdb/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
@@ -187,50 +190,57 @@
               <h5 class="card-title">Filters</h5>
               <div class="row">
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="hospital-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose hospital</option>
-                    <option value="1">BH1</option>
-                    <option value="2">BH2</option>
-                    <option value="3">BH3</option>
+                    <option value=0>BH1</option>
+                    <option value=1>BH2</option>
+                    <option value=2>BH3</option>
                   </select>
                   <label class="mdb-main-label">BH stands for Beijing Hospitals</label>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="department-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose department</option>
-                    <option value="1">Internal Medicine</option>
-                    <option value="2">Surgery2</option>
+                    <option value=0>Internal Medicine</option>
+                    <option value=1>Surgery2</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="disease-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose disease</option>
-                    <option value="1">Diabetes</option>
-                    <option value="2">Heart Disease</option>
+                    <option value=0>Diabetes</option>
+                    <option value=1>Heart Disease</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="gender-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose gender</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
+                    <option value=0>Male</option>
+                    <option value=1>Female</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="w-100"></div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="age_range-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose age range</option>
-                    <option value="1">&lt18</option>
-                    <option value="2">18-35</option>
-                    <option value="2">35-55</option>
-                    <option value="2">55-70</option>
-                    <option value="2">&gt70</option>
+                    <option value=0>&lt20</option>
+                    <option value=1>20-30</option>
+                    <option value=2>30-40</option>
+                    <option value=3>40-50</option>
+                    <option value=4>50-60</option>
+                    <option value=5>60-70</option>
+                    <option value=6>&gt70</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col"></div>
@@ -238,7 +248,7 @@
                 <div class="col"></div>
 
                 <div class="col">
-                  <button class="btn btn-info btn-sm">Search</button>
+                  <button id="data-search" class="btn btn-info btn-sm">Search</button>
                 </div>
 
               </div>
@@ -279,105 +289,7 @@
                       <td>25-30</td>
                       <td>0x3edbcag09tfa</td>
                     </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
+                    <!-- to be filled with javascript -->
                   </tbody>
                   <tfoot>
                     <tr>
@@ -417,51 +329,54 @@
               <h5 class="card-title">Filters</h5>
               <div class="row">
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="region-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose region</option>
-                    <option value="1">Beijing-west-1</option>
-                    <option value="2">Beijing-west-2</option>
-                    <option value="3">Beijing-east</option>
+                    <option value=0>Beijing-west-1</option>
+                    <option value=1>Beijing-west-2</option>
+                    <option value=2>Beijing-east</option>
                   </select>
                   <label class="mdb-main-label">Computatation infrastructure region</label>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="core-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose core number</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">4</option>
+                    <option value=0>1</option>
+                    <option value=1>2</option>
+                    <option value=2>4</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="mem-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose memory size</option>
-                    <option value="1">8G</option>
-                    <option value="2">16G</option>
-                    <option value="3">64G</option>
+                    <option value=0>8G</option>
+                    <option value=1>16G</option>
+                    <option value=2>64G</option>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="col">
-                  <select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                  <select id="function-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
                     <option value="" disabled selected>Choose function instance</option>
                     <optgroup label="Statistics">
-                      <option value="1">Distribution</option>
-                      <option value="2">SUM</option>
-                      <option value="3">Median</option>
+                      <option value=0>Distribution</option>
+                      <option value=1>SUM</option>
+                      <option value=2>Median</option>
                     </optgroup>
                     <optgroup label="ML Training">
-                      <option value="4">Linear Regression</option>
-                      <option value="5">Logistic Regression</option>
+                      <option value=3>Linear Regression</option>
+                      <option value=4>SVM</option>
                     </optgroup>
                     <optgroup label="ML Inference">
-                      <option value="4">SVM</option>
+                      <option value=5>Linear Model 1</option>
                       </option>
-                      <option value="5">ResNet</option>
                     </optgroup>
                   </select>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
                 </div>
 
                 <div class="w-100"></div>
@@ -473,47 +388,55 @@
                 <div class="col"></div>
 
                 <div class="col">
-                  <button class="btn btn-info btn-sm">Search</button>
+                  <button class="btn btn-info btn-sm" data-toggle="collapse" href="#fee-collapse" aria-expanded="false" aria-controls="fee-collapse" onclick="renderFuncPrice()">Price Detail</button>
                 </div>
 
               </div>
             </div>
+            <div class="collapse" id="fee-collapse">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Computation Price/min</th>
+                    <th>Data Transmission Price/GB</th>
+                    <th>Function Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Instance 1</th>
+                    <td>40 [Beijing-west-1, 1core, 8GB]</td>
+                    <td>80</td>
+                    <td id="func"></td>
+                  </tr>
+                  <tr>
+                </tbody>
+              </table>
+            </div>
           </section>
           <!--/ Section Filter -->
 
-          <!-- Section Result -->
+          <!-- Section Input Coloumn -->
           <section>
             <div class="card-body">
-              <h5 class="card-title">Results</h5>
-              <div class="table-ui p-2 mb-3 mx-4 mb-5">
-                <table id="function-record-table" class="table" cellspacing="0" width="100%">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th class="th-sm">Region
-                      </th>
-                      <th class="th-sm">Cores
-                      </th>
-                      <th class="th-sm">Memory
-                      </th>
-                      <th class="th-sm">Function Instance
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td>Beijing-west-1</td>
-                      <td>2</td>
-                      <td>16GB</td>
-                      <td>Linear Regression</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <h5 class="card-title">Input coloumn</h5>
+              <select id="coloumn-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                <option value="" disabled selected>Choose Input Coloumns</option>
+                <option value=0>bmi - Body Mass Index</option>
+                <option value=1>bp - Average Blood Pressure)</option>
+                <option value=2>s1 - T-Cells</option>
+                <option value=3>s2 - Low-density lipoproteins</option>
+                <option value=4>s3 - High-density lipoproteins</option>
+                <option value=5>s4 - Thyroid Stimulating hormone</option>
+                <option value=6>s5 - Lamotrigine </option>
+                <option value=7>s6 - Blood Sugar Level</option>
+              </select>
+              <label class="mdb-main-label">Diabetes dataset is using</label>
+              <button class="btn-save btn btn-primary btn-sm">Save</button>
             </div>
           </section>
-          <!--/ Section Result -->
+          <!--/ Section Input Coloumn -->
 
         </div>
       </section>
@@ -521,150 +444,105 @@
 
       <!-- Section: Security -->
       <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
-          <div class="card border-secondary mb-3">
-            <div class="card-header">3.Please select your security configurations</div>
-            <div class="card-body">
-              <h5 class="card-title">Characteristics</h5>
-              <!-- Security options -->
-              <div class="row">
-                <div class="col">
-                  <p>Data Scrubbing
-                    <a href="#" data-toggle="tooltip" title="Guarantee delete-after-use property for raw data"><i class="far fa-question-circle"></i></a>
-                  </p>
-                </div>
-                <div class="col">
-                  <div class="switch">
-                    <label>
-                      Off
-                      <input type="checkbox" unchecked>
-                      <span class="lever"></span> On
-                    </label>
-                  </div>
-                </div>
-
-                <div class="w-100"></div>
-
-
-                <div class="col">
-                  <p>Differential Privacy
-                    <a href="#" data-toggle="tooltip" title="Add noise to the generated model"><i class="far fa-question-circle"></i></a>
-                  </p>
-                </div>
-                <div class="col">
-                  <div class="switch">
-                    <label>
-                      Off
-                      <input type="checkbox" unchecked>
-                      <span class="lever"></span> On
-                    </label>
-                  </div>
-                </div>
-
-                <div class="w-100"></div>
-
-                <div class="col">
-                  <p>Result Sealing
-                    <a href="#" data-toggle="tooltip" title="Use encryption for result transferring"><i class="far fa-question-circle"></i></a>
-                  </p>
-                </div>
-                <div class="col">
-                  <div class="switch">
-                    <label>
-                      Off
-                      <input type="checkbox" checked>
-                      <span class="lever"></span> On
-                    </label>
-                  </div>
-                </div>
-
+        <div class="card border-secondary mb-3">
+          <div class="card-header">3.Please select your security configurations</div>
+          <div class="card-body">
+            <h5 class="card-title">Characteristics</h5>
+            <!-- Security options -->
+            <div class="row">
+              <div class="col">
+                <p>Data Scrubbing
+                  <a href="#" data-toggle="tooltip" title="Guarantee delete-after-use property for raw data"><i class="far fa-question-circle"></i></a>
+                </p>
               </div>
+              <div class="col">
+                <div class="switch">
+                  <label>
+                    Off
+                    <input id="scrub-option" type="checkbox" unchecked>
+                    <span class="lever"></span> On
+                  </label>
+                </div>
+              </div>
+
+              <div class="w-100"></div>
+
+
+              <div class="col">
+                <p>Differential Privacy
+                  <a href="#" data-toggle="tooltip" title="Add noise to the generated model"><i class="far fa-question-circle"></i></a>
+                </p>
+              </div>
+              <div class="col">
+                <div class="switch">
+                  <label>
+                    Off
+                    <input id="dp-option" type="checkbox" unchecked>
+                    <span class="lever"></span> On
+                  </label>
+                </div>
+              </div>
+
+              <div class="w-100"></div>
+
+              <div class="col">
+                <p>Result Sealing
+                  <a href="#" data-toggle="tooltip" title="Use encryption for result transferring"><i class="far fa-question-circle"></i></a>
+                </p>
+              </div>
+              <div class="col">
+                <div class="switch">
+                  <label>
+                    Off
+                    <input id="seal-option" type="checkbox" checked>
+                    <span class="lever"></span> On
+                  </label>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
-      </section>
-      <!--/ Section: Security -->
+    </div>
+    </section>
+    <!--/ Section: Security -->
 
-      <!-- Service confirm -->
-      <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ServiceCart">Launch Service</button>
-        <!--/ Button trigger modal -->
-        <!-- Modal: modalCart -->
-        <div class="modal fade" id="ServiceCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <!--Header-->
-              <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Your cart</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <!--Body-->
-              <div class="modal-body">
+    <!-- Service confirm -->
+    <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceCart" onclick="renderCart()">Launch Service</button>
+      <!--/ Button trigger modal -->
 
-                <table class="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Entity</th>
-                      <th>Data/Service</th>
-                      <th>Price</th>
-                      <th>Remove</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Beijing 1</td>
-                      <td>100 rec</td>
-                      <td>100 MDS</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Beijing 1</td>
-                      <td>100 rec</td>
-                      <td>100 MDS</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Beijing 1</td>
-                      <td>100 rec</td>
-                      <td>100 MDS</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr>
-                      <th scope="row">4</th>
-                      <td>Computation unit</td>
-                      <td>Linear regression</td>
-                      <td>100 10MDS/min</td>
-                      <td><a><i class="fas fa-times"></i></a></td>
-                    </tr>
-                    <tr class="total">
-                      <th scope="row">5</th>
-                      <td>Total</td>
-                      <td>
+      <!-- Modal: modalCart -->
+      <div class="modal fade" id="serviceCart" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header">
+              <h4 class="modal-title" id="cartModalLabel">Your service cart</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <!--Body-->
+            <div class="modal-body">
 
-                      <td>400$</td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
+              <table id="cart-table" class="table table-hover">
+                <!-- rendered by javascript -->
+              </table>
 
-              </div>
-              <!--Footer-->
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary">Checkout</button>
-              </div>
+            </div>
+            <!--Footer-->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary" data-dismiss="modal" onclick="sendTransaction()">Checkout</button>
             </div>
           </div>
         </div>
-        <!--/ Modal: modalCart -->
-      </section>
-      <!--/ Service confirm -->
+      </div>
+      <!--/ Modal: modalCart -->
+    </section>
+    <!--/ Service confirm -->
 
     </div>
 
@@ -672,23 +550,33 @@
 
 
   <script type="text/javascript">
+    // Option List
+    const hospitalOption = ["BH1", "BH2", "BH3", "BH4"];
+    const regionOption = ["Beijing-west-1", "Beijing-west-2", "Beijing-east"];
+    const functionOption = ["Distribution", "SUM", "Median", "Linear Regression", "SVM", "Linear Model-S1"];
+    const functionFee = [5, 5, 5, 10, 20, 10];
+
+    // Table Body
+    const dataBody = document.querySelector("#health-record-table > tbody");
+
+    // Service Detail
+    // service_id & issue_time handle to flask
+    var service = {
+      hospitals: [],
+      record_total: 0,
+      record_num: [],
+      func: 0,
+      func_fee: 0,
+      fixed_fee: 0,
+      security: {
+        scrub: "",
+        dp: "",
+        seal: ""
+      }
+    }
+
     $(document).ready(function() {
       $('#health-record-table').dataTable({
-
-        columnDefs: [{
-          orderable: false,
-          className: 'select-checkbox select-checkbox-all',
-          targets: 0
-        }],
-        select: {
-          style: 'multi',
-          selector: 'td:first-child'
-        }
-      });
-    });
-
-    $(document).ready(function() {
-      $('#function-record-table').dataTable({
 
         columnDefs: [{
           orderable: false,
@@ -706,6 +594,12 @@
       $('.mdb-select').materialSelect();
     });
 
+    $(document).ready(function() {
+      $('#data-search').click(function() {
+        // LoadData Into Table
+        loadData();
+      });
+    });
 
     // Tooltips Initialization
     $(function() {
@@ -714,6 +608,184 @@
 
     // Sidenav Initialization
     $(".button-collapse").sideNav();
+
+    // Render Price cartDetail
+    function renderFuncPrice() {
+      var funcPriceStr = "";
+      var func = parseInt($('#function-option').val(), 10);
+      funcPriceStr += functionOption[func] + ' ' + functionFee[func];
+      $('#func').html(funcPriceStr);
+    }
+
+    // Render service cart
+    function renderCart() {
+
+      console.log("calling renderCart");
+
+      collectOptions();
+
+      var cartDetailStr = "";
+      var hospitalStr = "";
+      var hosNum = service.record_num.length;
+      for (var i = 0; i < hosNum; i++) {
+        hospitalStr += '<tr><th scope="row">' + (i + 1).toString() +
+          '</th><td>' + hospitalOption[i] +
+          '</td><td>' + (service.record_num[i]).toString() + ' rec' +
+          '</td><td>' + (service.record_num[i] * 0.5).toString() +
+          '</td><td><a><i class="fas fa-times"></i></a></td></tr>';
+      }
+
+      cartDetailStr += '<thead>\
+                        <tr>\
+                          <th>#</th>\
+                          <th>Participant</th>\
+                          <th>Data/Function</th>\
+                          <th>Price(MDS)</th>\
+                          <th>Remove</th>\
+                        </tr>\
+                      </thead>\
+                      <tbody>' + hospitalStr +
+        '<tr><th scope="row">' + (i++).toString() +
+        '</th><td>Infrastructure</td>' +
+        '<td>' + functionOption[service.func] +
+        '</td><td>' + (service.func_fee).toString() + ', 40/min' +
+        '</td><td><a><i class="fas fa-times"></i></a></td></tr>' +
+        '<tr class="total"><th scope="row">' + (i++).toString() +
+        '</th><td>Fixed Fee</td><td></td>' +
+        '<td>' + (service.fixed_fee).toString() +
+        '</td><td></td></tr></tbody>'
+
+      $('#cart-table').html(cartDetailStr);
+    }
+
+    function collectOptions() {
+
+      console.log("calling collectOptions");
+
+      var hospitals = $('#hospital-option').val();
+
+      service.hospitals = hospitals.map(x => parseInt(x, 10));
+
+      //collect record_total
+
+      if (($('#gender-option').val()).length == 1) {
+        if(($('#age_range-option').val()).length == 1) {
+          service.record_total = 6;
+        }
+        else{
+          service.record_total = 240;
+        }
+      }
+      else{
+        service.record_total = 360;
+      }
+
+      var hosNum = service.hospitals.length;
+
+      for (var i = 0; i < hosNum; i++) {
+        service.record_num[i] = service.record_total / hosNum;
+      }
+      service.func = parseInt($('#function-option').val(), 10);
+
+      service.func_fee = functionFee[service.func];
+      service.fixed_fee = service.record_total * 0.5 + service.func_fee;
+
+      //service.security
+      if (document.getElementById('scrub-option').checked) {
+        //Switch On
+        service.security.scrub = "On";
+      } else {
+        service.security.scrub = "Off";
+      }
+
+      if (document.getElementById('dp-option').checked) {
+        service.security.dp = "On";
+      } else {
+        service.security.dp = "Off";
+      }
+
+      if (document.getElementById('seal-option').checked) {
+        service.security.seal = "On";
+      } else {
+        service.security.seal = "Off";
+      }
+
+      console.log(JSON.stringify(service));
+    }
+
+    function loadData() {
+
+      var filter = {
+        hospital: [],
+        department: 0,
+        disease: 0,
+        gender: 0,
+        age_range: []
+      }
+      var hospital = $('#hospital-option').val();
+      var age_range = $('#age_range-option').val();
+      var gender = $('#gender-option').val();
+      var department = $('#department-option').val();
+      var disease = $('#disease-option').val();
+
+      filter.hospital = hospital.map(x => parseInt(x, 10));
+      filter.age_range = age_range.map(x => parseInt(x, 10));
+      filter.department = department.map(x => parseInt(x, 10));
+      filter.disease = disease.map(x => parseInt(x, 10));
+      filter.gender = gender.map(x => parseInt(x, 10));
+
+      var filterJSON = JSON.stringify(filter);
+
+      const request = new XMLHttpRequest();
+      request.open("post", "api/data");
+      request.setRequestHeader("Content-Type", "application/json");
+      request.onload = () => {
+        try {
+          const json = JSON.parse(request.responseText);
+          populateData(json);
+        } catch (e) {
+          console.warn("Cloud not load medical data!");
+        }
+      };
+
+      request.send(filterJSON);
+      console.log('filerJSON'+ filterJSON)
+    }
+
+    function populateData(json) {
+      // Clear existing records
+      while (dataBody.firstChild) {
+        dataBody.removeChild(dataBody.firstChild);
+      }
+
+      // Populate table
+      json.forEach((row) => {
+        const tr = document.createElement("tr");
+
+        emptytd = document.createElement("td");
+        tr.appendChild(emptytd);
+
+        row.forEach((cell) => {
+          const td = document.createElement("td");
+          td.textContent = cell;
+          tr.appendChild(td);
+        });
+
+        dataBody.appendChild(tr);
+      });
+    }
+
+    function sendTransaction() {
+      var serviceJSON = JSON.stringify(service);
+
+      console.log("service JSON" + serviceJSON);
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/service", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.send(serviceJSON);
+      console.log("serviceJSON sended!");
+    }
   </script>
 
 </body>
