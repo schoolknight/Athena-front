@@ -8,7 +8,10 @@
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
   <title>Athena console</title>
 
-  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="../static/mdb/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
@@ -283,44 +286,9 @@
           <div class="px-4">
             <div class="table-responsive">
               <!-- Table -->
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">Service ID</th>
-                    <th scope="col">Issue Time</th>
-                    <th scope="col">Hospitals</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Details</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>13321</td>
-                    <td>2020-9-15-14:30</td>
-                    <td>Beijing1, Beijing2, Bejing3</td>
-                    <td>In progress</td>
-                    <td><a class="btn btn-info btn-primary" data-toggle="modal" data-target="#modal-13321"><i class="fas fa-leaf"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>13322</td>
-                    <td>2020-9-16-10:02</td>
-                    <td>Shanghai1, Shanghai2, Shanghai3</td>
-                    <td>Finished</td>
-                    <td>
-                      <a class="btn btn-success btn-primary" data-toggle="modal" data-target="#modal-13322"><i class="fas fa-leaf"></i></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>13323</td>
-                    <td>2020-9-15-14:30</td>
-                    <td>Beijing1, Beijing2, Bejing3</td>
-                    <td>In progress</td>
-                    <td>
-                      <a class="btn btn-info btn-primary" data-toggle="collapse" data-target="modal-13323"><i class="fas fa-leaf"></i></a>
-                    </td>
-                  </tr>
-                </tbody>
+              <table id="order-table" class="table table-hover">
+
+              <!-- dynamically rendered -->
               </table>
             </div>
           </div>
@@ -328,16 +296,15 @@
       </section>
       <!-- Section Table -->
 
-      <!-- order13321 -->
-      <div class="modal fade left" id="modal-13321" tabindex="-1" role="dialog" aria-labelledby="label-13321" area-hidden="true">
+      <div class="modal fade left" id="detail-modal" tabindex="-1" role="dialog" aria-labelledby="detail-modal" area-hidden="true">
         <div class="modal-dialog modal-full-height modal-left" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title w-100" id="label-13321">Details</h4>
+              <h4 class="modal-title w-100" id="detail-modal">Details</h4>
             </div>
             <div class="modal-body">
               <div class="card-wrapper">
-                <div class="card card-rotating">
+                <div id="card-flipping" class="card card-rotating">
                   <div class="face front">
                     <div class="card-up">
                       <img class="card-img-top" src="../static/img/THU-BG.jpg">
@@ -347,25 +314,11 @@
                     </div>
                     <div class="card-body card-body-cascade">
                       <h5 class="pink-text pb-2 pt-1">Job Digest</h5>
-                      <ul class="list-group">
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-hospital green-text mr-5"></i>Beijing 1(100), BeiJing2(100), Beijng3(200)
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-clock mr-5"></i>2020-10-9-12:53
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-tasks mr-5"></i>Linear Regression
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-trash-alt mr-5"></i>Scrubbing On
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-credit-card mr-5"></i>200 MDS
-                        </li>
+                      <ul id="digest-list" class="list-group">
+                        <!-- rendered by javascript -->
                       </ul>
                       <div class="text-center">
-                        <a class="rotate-btn" data-card="card-13322"><i class="fas fa-redo-alt">Progress</i></a>
+                        <a class="rotate-btn" data-card="card-flipping"><i class="fas fa-redo-alt">Progress</i></a>
                       </div>
                     </div>
                   </div>
@@ -373,48 +326,11 @@
                   <div class="face back">
                     <div class="card-body card-body-cascade">
                       <h5 class="pink-text pb-2 pt-1">Progress</h5>
-                      <ul class="stepper stepper-vertical">
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">1</span>
-                            <span class="label">Service Iussing</span>
-                          </a>
-                        </li>
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">2</span>
-                            <span class="label">Data Authorization</span>
-                          </a>
-                        </li>
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">3</span>
-                            <span class="label">Infrastructure Allocation</span>
-                          </a>
-                        </li>
-
-                        <li class="active">
-                          <a href="#!">
-                            <span class="circle">4</span>
-                            <span class="label">Computation</span>
-                            <div class="spinner-border text-primary" role="status">
-                              <span class="sr-only">Loading...</span>
-                            </div>
-                          </a>
-                        </li>
-
-                        <li>
-                          <a href="#!">
-                            <span class="circle">5</span>
-                            <span class="label">Balance</span>
-                          </a>
-                        </li>
+                      <ul id="stepper" class="stepper stepper-vertical">
+                        <!-- rendered by javascript -->
                       </ul>
                       <div class="text-center">
-                        <a class="rotate-btn" data-card="card-13322"><i class="fas fa-redo-alt">Digest</i></a>
+                        <a class="rotate-btn" data-card="card-flipping"><i class="fas fa-redo-alt">Digest</i></a>
                       </div>
                     </div>
                   </div>
@@ -429,102 +345,7 @@
         </div>
       </div>
 
-      <!-- order13322 -->
-      <div class="modal fade left" id="modal-13322" tabindex="-1" role="dialog" aria-labelledby="label-13322" area-hidden="true">
-        <div class="modal-dialog modal-full-height modal-left" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title w-100" id="label-13322">Details</h4>
-            </div>
-            <div class="modal-body">
-              <div class="card-wrapper">
-                <div class="card card-rotating">
-                  <div class="face front">
-                    <div class="card-up">
-                      <img class="card-img-top" src="../static/img/THU-BG.jpg">
-                    </div>
-                    <div class="avatar mx-auto white">
-                      <img src="static/img/THU.png" class="rounded-circle">
-                    </div>
-                    <div class="card-body card-body-cascade">
-                      <h5 class="pink-text pb-2 pt-1">Job Digest</h5>
-                      <ul class="list-group">
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-hospital green-text mr-5"></i>Beijing 1(100), BeiJing2(100), Beijng3(200)
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-clock mr-5"></i>2020-11-9-12:53
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-tasks mr-5"></i>Logistic Regression
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-trash-alt mr-5"></i>Scrubbing Off
-                        </li>
-                        <li class="list-group-item">
-                          <div class="md-v-line"></div><i class="fas fa-credit-card mr-5"></i>200 MDS
-                        </li>
-                      </ul>
-                      <div class="text-center">
-                        <a class="rotate-btn" data-card="card-13322"><i class="fas fa-redo-alt">Progress</i></a>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="face back">
-                    <div class="card-body card-body-cascade">
-                      <h5 class="pink-text pb-2 pt-1">Progress</h5>
-                      <ul class="stepper stepper-vertical">
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">1</span>
-                            <span class="label">Service Iussing</span>
-                          </a>
-                        </li>
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">2</span>
-                            <span class="label">Data Authorization</span>
-                          </a>
-                        </li>
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">3</span>
-                            <span class="label">Infrastructure Allocation</span>
-                          </a>
-                        </li>
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">4</span>
-                            <span class="label">Computation</span>
-                          </a>
-                        </li>
-
-                        <li class="completed">
-                          <a href="#!">
-                            <span class="circle">5</span>
-                            <span class="label">Balance</span>
-                          </a>
-                        </li>
-                      </ul>
-                      <div class="text-center">
-                        <a class="rotate-btn" data-card="card-13322"><i class="fas fa-redo-alt">Digest</i></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer justify-content-center">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Export</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
     </div>
@@ -536,7 +357,221 @@
     $(".button-collapse").sideNav();
   </script>
 
+  <script type="text/javascript">
 
+  var order_list = [];
+
+  function refreshOrders(){
+    $.getJSON("/api/order", function(result){
+      for(var i in result) {
+        var item = result[i];
+        var tmpFlag = 0;
+        for (var j in order_list) {
+          if (item['service_id'] == order_list[j]['service_id']){
+            tmpFlag = 1;
+            break;
+          }
+        }
+        if (tmpFlag == 0){ // a new order
+          refreshFlag = 1;
+          break;
+        }
+      }
+
+      order_list = result;
+      if (refreshFlag > 0){
+        updatePage();
+      }
+
+
+    });
+  }
+
+  function updatePage(){
+    var order_tr = [];
+    var tableStr = '<thead><tr>\
+                    <th scope="col">Service ID</th>\
+                    <th scope="col">Issue Time</th>\
+                    <th scope="col">Hospitals</th>\
+                    <th scope="col">Status</th>\
+                    <th scope="col">Result</th>\
+                    <th scope="col">Details</th>\
+                    </tr></thead><tbody>';
+    for (var i in order_list) {
+      var item = order_list[i];
+      var hospitalStr = "";
+      var resbuttonStr ="";
+
+
+      for (var hos in item['hospitals']){
+        hospitalStr += item['hospitals'][hos] + ",";
+      }
+
+      if (item['order_status'] == 0){
+        resbuttonStr='<a class="btn btn-success btn-primary"><i class="fas fa-leaf"></i></a>';
+        statusStr = 'Completed';
+      } else {
+        statusStr = 'In progress';
+      }
+
+      order_tr[i] = '<tr><td>' + item['service_id'] + '</td><td>' +
+                                 item['issue_time'] + '</td><td>' +
+                                 hospitalStr + '</td><td>' +
+                                 statusStr + '</td><td>' +
+                                 resbuttonStr + '</td><td>' +
+                                 '<a class="btn btn-info btn-primary" data-toggle="modal" data-target="#detail-modal" onclick="showDetail(' + i +')"><i class="fas fa-leaf"></i></a></td></tr>';
+    }
+
+    for (var i in order_tr) {
+      tableStr += order_tr[i];
+    }
+    tableStr += '</tbody>';
+
+    $('#order-table').html(tableStr);
+  }
+
+  function showDetail(tarId){
+    var digestStr = "";
+    var stepperStr = "";
+    var hospitalStr = "";
+    var numStr="";
+
+    for (var i in order_list[tarId]['hospitals']){
+      hospitalStr += order_list[tarId]['hospitals'][i] + ',';
+    }
+
+    for (var i in order_list[tarId]['record_num']){
+      numStr += order_list[tarId]['record_num'][i] + ',';
+    }
+
+    digestStr = '<li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-hospital green-text mr-5"></i>' + hospitalStr +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-hospital green-text mr-5"></i>' + numStr +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-clock mr-5"></i>' + order_list[tarId]['issue_time'] +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-tasks mr-5"></i>' + order_list[tarId]['function'] +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-trash-alt mr-5"></i>' + 'Scrub: ' + order_list[tarId]['security']['scrubbing'] + ' ' +
+                      'DP: ' + order_list[tarId]['security']['dp'] + ' ' +
+                      'Seal: ' + order_list[tarId]['security']['sealing'] +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-credit-card mr-5"></i>' + order_list[tarId]['fee'] +
+                '</li>'
+
+    var exec_status = order_list[tarId]['exec_status'];
+    switch(exec_status){
+      case 0:
+        stepperStr = '<li class="completed">\
+                          <a href="#!">\
+                            <span class="circle">1</span>\
+                            <span class="label">Service Iussing</span>\
+                          </a>\
+                        </li>\
+                        <li class="active">\
+                          <a href="#!">\
+                            <span class="circle">2</span>\
+                            <span class="label">Data Authorization</span>\
+                            <div class="spinner-border text-primary" role="status">\
+                              <span class="sr-only">Loading...</span>\
+                            </div>\
+                          </a>\
+                        </li>\
+                        <li class="completed">\
+                          <a href="#!">\
+                            <span class="circle">3</span>\
+                            <span class="label">Infrastructure Allocation</span>\
+                          </a>\
+                        </li>\
+                        <li class="completed">\
+                          <a href="#!">\
+                            <span class="circle">4</span>\
+                            <span class="label">Computation</span>\
+                          </a>\
+                        </li>\
+                        <li>\
+                          <a href="#!">\
+                            <span class="circle">5</span>\
+                            <span class="label">Balance</span>\
+                          </a>\
+                        </li>'
+      break;
+      case 1:
+      stepperStr =  '<li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">1</span>\
+                          <span class="label">Service Iussing</span>\
+                        </a>\
+                      </li>\
+                      <li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">2</span>\
+                          <span class="label">Data Authorization</span>\
+                        </a>\
+                      </li>\
+                      <li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">3</span>\
+                          <span class="label">Infrastructure Allocation</span>\
+                        </a>\
+                      </li>\
+                      <li class="active">\
+                        <a href="#!">\
+                          <span class="circle">4</span>\
+                          <span class="label">Computation</span>\
+                          <div class="spinner-border text-primary" role="status">\
+                            <span class="sr-only">Loading...</span>\
+                          </div>\
+                        </a>\
+                      </li>\
+                      <li>\
+                        <a href="#!">\
+                          <span class="circle">5</span>\
+                          <span class="label">Balance</span>\
+                        </a>\
+                      </li>'
+      break;
+      case 2:
+      stepperStr =  '<li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">1</span>\
+                          <span class="label">Service Iussing</span>\
+                        </a>\
+                      </li>\
+                      <li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">2</span>\
+                          <span class="label">Data Authorization</span>\
+                        </a>\
+                      </li>\
+                      <li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">3</span>\
+                          <span class="label">Infrastructure Allocation</span>\
+                        </a>\
+                      </li>\
+                      <li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">4</span>\
+                          <span class="label">Computation</span>\
+                        </a>\
+                      </li>\
+                      <li class="completed">\
+                        <a href="#!">\
+                          <span class="circle">5</span>\
+                          <span class="label">Balance</span>\
+                        </a>\
+                      </li>'
+    }
+
+
+    $('#digest-list').html(digestStr);
+    console.log(stepperStr);
+    $('#stepper').html(stepperStr);
+
+  }
+
+  refreshOrders();
+
+   setInterval(()=> {
+     refreshOrders();
+   }, 20000);
+  </script>
 </body>
 
 
