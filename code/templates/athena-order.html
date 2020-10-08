@@ -8,7 +8,10 @@
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
   <title>Athena console</title>
 
-
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="../static/mdb/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
@@ -364,7 +367,7 @@
         var item = result[i];
         var tmpFlag = 0;
         for (var j in order_list) {
-          if (item['_id'] == order_list[j]['_id']){
+          if (item['service_id'] == order_list[j]['service_id']){
             tmpFlag = 1;
             break;
           }
@@ -411,7 +414,7 @@
         statusStr = 'In progress';
       }
 
-      order_tr[i] = '<tr><td>' + item['_id'] + '</td><td>' +
+      order_tr[i] = '<tr><td>' + item['service_id'] + '</td><td>' +
                                  item['issue_time'] + '</td><td>' +
                                  hospitalStr + '</td><td>' +
                                  statusStr + '</td><td>' +
@@ -451,7 +454,7 @@
                 '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-credit-card mr-5"></i>' + order_list[tarId]['fee'] +
                 '</li>'
 
-    var exec_status = order_list[tarId]['exe_status'];
+    var exec_status = order_list[tarId]['exec_status'];
     switch(exec_status){
       case 0:
         stepperStr = '<li class="completed">\

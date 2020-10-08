@@ -1,12 +1,12 @@
 [{
-    "_id": "13321",
+    "service_id": "13321",
     "issue_time": "2020-9-15-14:30",
     "hospitals": ["BH1", "BH2", "BH3", "BH4"],
     "record_num": ["100", "200", "300", "400"],
-    "exe_status": 0,
+    "exec_status": 0,
     "order_status": 0,
     "function": "linear regression",
-    "fee": "150",
+    "fixed_fee": "150",
     "security": {
       "scrubbing": "On",
       "dp": "Off",
@@ -15,14 +15,14 @@
   },
 
   {
-    "_id": "13322",
+    "service_id": "13322",
     "issue_time": "2020-9-15-14:30",
     "hospitals": ["BH1", "BH2", "BH3", "BH4"],
     "record_num": ["100", "200", "300", "400"],
-    "exe_status": 1,
+    "exec_status": 1,
     "order_status": 1,
     "function": "linear regression",
-    "fee": "200",
+    "fixed_fee": "200",
     "security": {
       "scrubbing": "On",
       "dp": "On",
@@ -31,14 +31,14 @@
   },
 
   {
-    "_id": "13323",
+    "service_id": "13323",
     "issue_time": "2020-9-15-14:30",
     "hospitals": ["BH1", "BH2", "BH3"],
     "record_num": ["100", "200", "200"],
-    "exe_status": 0,
+    "exec_status": 0,
     "order_status": 1,
     "function": "linear regression",
-    "fee": "300",
+    "fixed_fee": "300",
     "security": {
       "scrubbing": "On",
       "dp": "Off",
@@ -47,14 +47,14 @@
   },
 
   {
-    "_id": "13324",
+    "service_id": "13324",
     "issue_time": "2020-9-15-14:30",
     "hospitals": ["BH1", "BH2", "BH3"],
     "record_num": ["100", "200", "100"],
-    "exe_status": 2,
+    "exec_status": 2,
     "order_status": 0,
     "function": "linear regression",
-    "fee": "320",
+    "fixed_fee": "320",
     "security": {
       "scrubbing": "On",
       "dp": "Off",

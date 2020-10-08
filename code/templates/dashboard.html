@@ -7,12 +7,15 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Bootstrap 101 Template</title>
 
-  
-    <script src="{{url_for('static', filename='echarts.min.js')}}"></script>
-  
 
-    
-  
+    <script src="{{url_for('static', filename='echarts.min.js')}}"></script>
+
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="../static/mdb/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
@@ -55,7 +58,7 @@
               <a href="#" class="pl-0"><img src="../static/img/THU.png" class="img-fluid flex-center" style="height: 95px"></a>
             </div>
           </li>
-  
+
           <!--/. Athena Logo -->
           <!--Social-->
           <li>
@@ -76,7 +79,7 @@
             </form>
           </li>
           <!--/.Search Form-->
-  
+
           <!-- Side navigation links -->
           <li>
             <ul class="collapsible collapsible-accordion">
@@ -104,30 +107,30 @@
             <!--/. Side navigation links -->
           </li>
           <!--/ Side navigation links -->
-  
+
         </ul>
         <div class="sidenav-bg purple lighten-3"></div>
       </div>
       <!--/. Sidebar navigation -->
-  
+
       <!-- Navbar -->
       <nav class="navbar fixed-top navbar-expand-lg scrolling-navbar double-nav">
-  
+
         <!-- SideNav slide-out button -->
         <div class="float-left">
           <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
         </div>
-  
+
         <!-- Breadcrumb -->
         <div class="breadcrumb-dn mr-auto">
           <p>Service Panel</p>
         </div>
-  
+
         <div class="d-flex change-mode">
-  
+
           <!-- Navbar links -->
           <ul class="nav navbar-nav nav-flex-icons ml-auto">
-  
+
             <!-- Dropdown -->
             <li class="nav-item dropdown notifications-nav">
               <a class="nav-link dropdown-toggle waves-effect" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -159,47 +162,47 @@
                 <a class="dropdown-item" href="#">My account</a>
               </div>
             </li>
-  
+
           </ul>
           <!-- Navbar links -->
-  
+
         </div>
-  
+
       </nav>
       <!-- Navbar -->
-  
+
     </header>
 
     <main>
 
       <div class="contianer-fluid">
-  
+
         <div class="mt-lg-5 mb-5">
-  
+
           <h4 class="text-left font-weight-bold dark-grey-text">Athena System Overview</h4>
           <hr>
-  
+
         </div>
-  
+
         <!-- Section: Data -->
         <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
-  
+
           <div class="card border-secondary mb-3">
-  
+
             <div class="card-header ">System States</div>
               <div class="card-body">
                 <div class="row">
                   <div class="col">
                     <div class="card">
                       <!-- Card image -->
-                      <img class="card-img-top mx-auto d-block status-card" src="{{url_for('static', filename='img/system_health.jpg')}}" alt="Card image cap" style="width: 200px;">                   
+                      <img class="card-img-top mx-auto d-block status-card" src="{{url_for('static', filename='img/system_health.jpg')}}" alt="Card image cap" style="width: 200px;">
                       <!-- Card content -->
                       <div class="card-body">
                         <!-- Title -->
                         <h4 class="card-title"><a>System Health:60%</a></h4>
-                    
+
                       </div>
-                    
+
                     </div>
                   </div>
                   <div class="col">
@@ -207,13 +210,13 @@
                       <!-- Card image -->
                       <img class="card-img-top  mx-auto d-block status-card" src="{{url_for('static', filename='img/blockchain.svg')}}" alt="Card image cap">
                       <!-- Card content -->
-                      <div class="card-body">               
+                      <div class="card-body">
                         <!-- Title -->
                         <h4 class="card-title"><a>Node Number:5</a></h4>
                         <!-- Text -->
-                    
+
                       </div>
-                    
+
                     </div>
                   </div>
                   <div class="col">
@@ -221,34 +224,34 @@
 
                       <!-- Card image -->
                       <img class="card-img-top  mx-auto d-block status-card" src="{{url_for('static', filename='img/smart_contract.png')}}" alt="Card image cap">
-                    
+
                       <!-- Card content -->
                       <div class="card-body">
-                    
+
                         <!-- Title -->
                         <h4 class="card-title"><a id='contract_number'>Active Contracts: 0</a></h4>
                         <!-- Text -->
-                    
+
                       </div>
-                    
+
                     </div>
                   </div>
                 </div>
-  
-                  
+
+
               </div>
           </div>
         </section>
         <!--/ Section: Data -->
-  
+
         <!-- Section: Function -->
         <section class="mt-md-4 pt-md-2 ml-md-5 pl-4 mb-2 pb-1">
           <div class="card border-secondary mb-3">
-  
+
             <div class="card-header">Active Smart Contracts</div>
-  
+
             <!-- Section: Filter -->
-        
+
               <div class="card-body">
                 <div class="row">
                   <div class="col">
@@ -258,38 +261,38 @@
                   <div class="col-8">
                     <div class="card">
                       <div class="card-body" id='contract_detail'>
-                        
-                        
+
+
                       </div>
                     </div>
                   </div>
-                </div>            
+                </div>
               </div>
               <div class="d-flex justify-content-center">
                 <div class=" chart-area" id="main_chart"></div>
               </div>
             </section>
-     
-  
-         
-  
+
+
+
+
           </div>
         </section>
         <!--/ Section: Function -->
-  
+
         <!-- Section: Security -->
-        
-  
+
+
         <!-- Service confirm -->
-       
-  
+
+
       </div>
 
     </main>
 
-    
-   
-   
+
+
+
     <script type="text/javascript">
       var myChart = echarts.init(document.getElementById('main_chart'));
       var deal_list = [];
@@ -356,12 +359,12 @@
                     color:'#6699CC'
                 },
                 label:{
-                  formatter: "{b}\n{c}%"  
+                  formatter: "{b}\n{c}%"
                 },
                 tooltip:{
                     formatter:'{b} process {c}%'
                 }
-                
+
               },{
                 name: 'patient',
                 value: 10,
@@ -371,7 +374,7 @@
                     color:'#006699'
                 },
                 label:{
-                  formatter: "{b}\n{c}%"  
+                  formatter: "{b}\n{c}%"
                 },
                 tooltip:{
                     formatter:'{b} process {c}%'
@@ -444,12 +447,12 @@
             detailStr += '<p class="card-text">Data Number:' + item['dataNum'] +  '</p>';
             detailStr += '<p class="card-text">Created At:' + item['createdAt'] +  '</p>';
             $('#contract_detail').html(detailStr);
-            setChart(item);              
+            setChart(item);
           }else{
             buttonStr += '<button type="button" class="btn" onclick="showDeal(' + i + ')">' + item['_id'] + '</button>\n';
-          }          
+          }
         }
-        $('#contract_button').html(buttonStr);       
+        $('#contract_button').html(buttonStr);
       }
       function showDeal(tarId){
         if (tarId != currentButton){
@@ -465,22 +468,22 @@
         }
       }
       refreshDeal(0);
-      
+
       setInterval(() => {
         refreshDeal(1);
       }, 10000);
-      
+
       // 基于准备好的dom，初始化echarts实例
       //toastr.info('test');
-      
-      
-      
-      
+
+
+
+
 
       // 指定图表的配置项和数据
 
       // 使用刚指定的配置项和数据显示图表。
-      
+
     </script>
 
 

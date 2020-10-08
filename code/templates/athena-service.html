@@ -8,7 +8,10 @@
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
   <title>Athena Service</title>
 
-
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="../static/mdb/bootstrap.min.css">
   <!-- Material Design Bootstrap -->
@@ -370,7 +373,7 @@
                       <option value=4>SVM</option>
                     </optgroup>
                     <optgroup label="ML Inference">
-                      <option value=5>Linear Model-S1</option>
+                      <option value=5>Linear Model 1</option>
                       </option>
                     </optgroup>
                   </select>
@@ -633,8 +636,6 @@
           '</td><td><a><i class="fas fa-times"></i></a></td></tr>';
       }
 
-      console.log(hospitalStr);
-
       cartDetailStr += '<thead>\
                         <tr>\
                           <th>#</th>\
@@ -655,10 +656,6 @@
         '<td>' + (service.fixed_fee).toString() +
         '</td><td></td></tr></tbody>'
 
-
-
-
-
       $('#cart-table').html(cartDetailStr);
     }
 
@@ -670,8 +667,19 @@
 
       service.hospitals = hospitals.map(x => parseInt(x, 10));
 
-      //record_total
-      service.record_total = 300;
+      //collect record_total
+
+      if (($('#gender-option').val()).length == 1) {
+        if(($('#age_range-option').val()).length == 1) {
+          service.record_total = 6;
+        }
+        else{
+          service.record_total = 240;
+        }
+      }
+      else{
+        service.record_total = 360;
+      }
 
       var hosNum = service.hospitals.length;
 
@@ -704,37 +712,33 @@
       }
 
       console.log(JSON.stringify(service));
-
-
-    }
-
-    function getData(){
-
-
     }
 
     function loadData() {
 
-      var filter={
-        hospitals: [],
+      var filter = {
+        hospital: [],
         department: 0,
         disease: 0,
         gender: 0,
         age_range: []
       }
-      var hospitals = $('#hospital-option').val();
+      var hospital = $('#hospital-option').val();
       var age_range = $('#age_range-option').val();
+      var gender = $('#gender-option').val();
+      var department = $('#department-option').val();
+      var disease = $('#disease-option').val();
 
-      filter.hospitals = hospitals.map(x => parseInt(x, 10));
+      filter.hospital = hospital.map(x => parseInt(x, 10));
       filter.age_range = age_range.map(x => parseInt(x, 10));
-      filter.department = parseInt($('#department-option').val(), 10);
-      filter.disease = parseInt($('#disease-option').val(), 10);
-      filter.gender = parseInt($('#gender-option').val(), 10);
+      filter.department = department.map(x => parseInt(x, 10));
+      filter.disease = disease.map(x => parseInt(x, 10));
+      filter.gender = gender.map(x => parseInt(x, 10));
 
       var filterJSON = JSON.stringify(filter);
 
       const request = new XMLHttpRequest();
-      request.open("get", "api/data", true);
+      request.open("post", "api/data");
       request.setRequestHeader("Content-Type", "application/json");
       request.onload = () => {
         try {
@@ -746,6 +750,7 @@
       };
 
       request.send(filterJSON);
+      console.log('filerJSON'+ filterJSON)
     }
 
     function populateData(json) {
@@ -773,6 +778,9 @@
 
     function sendTransaction() {
       var serviceJSON = JSON.stringify(service);
+
+      console.log("service JSON" + serviceJSON);
+
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "/api/service", true);
       xhr.setRequestHeader("Content-Type", "application/json");
