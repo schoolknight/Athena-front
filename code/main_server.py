@@ -24,6 +24,7 @@ deal_col = mongo[database_str][deal_col_str]
 server_dir = os.path.dirname(__file__)
 data_path = os.path.join(server_dir, "data.json")
 order_path = os.path.join(server_dir, "order.json")
+balance_path = os.path.join(server_dir, "balance.json")
 
 service_id = 13321
 HOSPITAL = ['BH1', 'BH2', 'BH3']

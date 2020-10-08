@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message FuncId {
+  int32 value = 1;
+}
+
+message FuncResult {
+  int32 value = 1;
+}
+
+service SecureFunc {
+  rpc SGXFunc(FuncId) returns(FuncResult) {}
+}
