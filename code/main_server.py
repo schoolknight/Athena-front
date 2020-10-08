@@ -29,7 +29,7 @@ service_id = 13321
 HOSPITAL = ['BH1', 'BH2', 'BH3']
 DEPARTMENT = ['Internal Medicine', 'Surgery']
 DISEASE = ['Diabetes', 'Heart Disease']
-GENDER = ['Male' 'Female']
+GENDER = ['Male' ,'Female']
 AGE_RANGE = ['<20', '20-30', '30-40', '40-50', '50-60', '60-70', '>70']
 FUNCTION=['Distribution', 'SUM', 'Median', 'Linear Regression', 'SVM', 'Linear Model 1']
 
@@ -130,7 +130,7 @@ def getOrders():
         res_item['record_num'] = str(item['record_num'])
         res_item['order_status'] = item['order_status']
         res_item['exec_status'] = item['exec_status']
-        res_item['function'] = FUNCTION[item['function']]
+        res_item['function'] = FUNCTION[item['func']]
         res_item['fixed_fee'] = str(item['fixed_fee'])
         res_item['security'] = item['security']
         res.append(res_item)
@@ -158,23 +158,25 @@ def getBalance():
 @app.route('/api/data', methods=['POST'])
 def getData():
     filter = request.get_json()
-
-    #add query builder
-    data_query = {'$and':[{'hospital': {'$in': filter.hospitals},
-                    'department': {'$in': filter.department},
-                    'disease': {'$in': filter.disease},
-                    'gender': {'$in': filter.gender},
-                    'age_range': {'$in': filter.age_range}}]}
-
+    print(filter)
+    #add query builder 
+    data_query = {'$and':[{'hospital': {'$in': filter['hospital']},
+                    'department': {'$in': filter['department']},
+                    'disease': {'$in': filter['disease']},
+                    'sex': {'$in': filter['gender']},
+                    'age_range': {'$in': filter['age_range']}}]}
+    #print(data_query)
     data_list = data_col.find(data_query)
     res = []
     for item in data_list:
+        #print(item)
         res_item = {}
         res_item['hospital'] = HOSPITAL[item['hospital']]
         res_item['department'] = DEPARTMENT[item['department']]
         res_item['disease'] = DISEASE[item['disease']]
-        res_item['gender'] = GENDER[item['gender']]
+        res_item['gender'] = GENDER[item['sex']]
         res_item['age_range'] = AGE_RANGE[item['age_range']]
+        res_item['hash'] = str(item['_id'])[-8:]
         res.append(res_item)
 
     return jsonify(res)
@@ -201,6 +203,8 @@ def postService():
     deal['func_fee']=service['func_fee']
     deal['balance_done'] = 1
     deal['result'] = {}
+    deal['hospital_permit'] = 0
+    deal['patient_permit'] = 0
 
     print(deal)
 
