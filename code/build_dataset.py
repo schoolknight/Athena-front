@@ -5,21 +5,37 @@ import configparser
 
 diabetes = datasets.load_diabetes()
 
-conf= configparser.ConfigParser()
-conf.read('./server.ini')
-uri = conf.get("mongodb", "uri")
-database_str = conf.get("mongodb", "database")
-data_col_str = conf.get("mongodb", "data_col")
+f = open('server.conf')
+lines = f.readlines()
+f.close()
+
+uri = lines[0].strip()
+database_str = lines[1].strip()
+data_col_str = lines[2].strip()
+deal_col_str = lines[3].strip()
 mongo = pymongo.MongoClient(uri)
 data_col = mongo[database_str][data_col_str]
+deal_col = mongo[database_str][deal_col_str]
 
 insert_list = []
 for item in diabetes.data:
+    cur_age = float(item[0])* 420 + 50
+    cur_range = int(cur_age / 10) - 2
+    if cur_range < 0:
+        cur_range = 0
+    if cur_range > 6:
+        cur_range = 6
+    cur_sex = 0
+    if float(item[1]) > 0:
+        cur_sex = 1
+
     tmp_item = {
         'hospital': random.randint(0,2),
         'department': 0,
-        'age':item[0],
-        'sex':item[1],
+        'disease':0,
+        'age_range': cur_range,
+        'age':cur_age,
+        'sex':cur_sex,
         'bmi':item[2],
         'bp':item[3],
         's1':item[4],

@@ -30,18 +30,18 @@ service_id = 13321
 HOSPITAL = ['BH1', 'BH2', 'BH3']
 DEPARTMENT = ['Internal Medicine', 'Surgery']
 DISEASE = ['Diabetes', 'Heart Disease']
-GENDER = ['Male' 'Female']
+GENDER = ['Male' ,'Female']
 AGE_RANGE = ['<20', '20-30', '30-40', '40-50', '50-60', '60-70', '>70']
 FUNCTION=['Distribution', 'SUM', 'Median', 'Linear Regression', 'SVM', 'Linear Model 1']
 
 
 @app.route('/get_deals')
 def getDeals():
-    deal_list = deal_col.find({'status':0})
+    deal_list = deal_col.find({})
     res = []
     for item in deal_list:
         item['_id'] = str(item['_id'])
-        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        #item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
         res.append(item)
     return jsonify(res)
 
@@ -50,27 +50,46 @@ def getDeals():
 def dashBoard():
     return render_template('dashboard.html')
 
-@app.route('/phone/<tar_id>')
-def phone(tar_id):
+@app.route('/phone/<num>')
+def phone(num):
     deal_list = deal_col.find()
     res = []
     for item in deal_list:
         item['_id'] = str(item['_id'])
-        item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        #item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
         res.append(item)
-    return render_template('phone.html',deal_list=res, patient_id=int(tar_id))
+    if int(num) > 0 and len(res) > int(num):
+        return render_template('phone.html',deal_list=res, if_toast=1)
+    else:
+        return render_template('phone.html',deal_list=res, if_toast=0) 
+
+@app.route('/hospital/<num>')
+def hospital(num):
+    deal_list = deal_col.find()
+    res = []
+    for item in deal_list:
+        item['_id'] = str(item['_id'])
+        #item['createdAt'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(item['createdAt']));
+        res.append(item)
+    if int(num) > 0 and len(res) > int(num):
+        return render_template('hospital.html',deal_list=res, if_toast=1)
+    else:
+        return render_template('hospital.html',deal_list=res, if_toast=0)
 
 @app.route('/patient_operate')
-def patientOpeerate():
+def patientOperate():
     deal_id = request.args.get('deal')
-    patient_id = int(request.args.get('patient'))
     op_type = int(request.args.get('op')) + 1
-
-    update_item = {}
-    update_item['patient.'+ str(patient_id)] = op_type
-    print(update_item)
-    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':update_item})
+    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type}})
     return 'ok'
+
+@app.route('/hospital_operate')
+def hospitalOperate():
+    deal_id = request.args.get('deal')
+    op_type = int(request.args.get('op')) + 1
+    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
+    return 'ok'
+
 
 @app.route('/athena')
 def athena():
@@ -112,7 +131,7 @@ def getOrders():
         res_item['record_num'] = str(item['record_num'])
         res_item['order_status'] = item['order_status']
         res_item['exec_status'] = item['exec_status']
-        res_item['function'] = FUNCTION[item['function']]
+        res_item['function'] = FUNCTION[item['func']]
         res_item['fixed_fee'] = str(item['fixed_fee'])
         res_item['security'] = item['security']
         res.append(res_item)
@@ -129,36 +148,36 @@ def getBalance():
         res_item['service_id'] = str(item['service_id'])
         res_item['issue_time'] = item['issue_time']
         res_item['hospitals'] = [str(hos) for hos in item['hospitals']]
-        res_item['hospital_fee'] = [str(rec*0.5) for rec in item['record_num'])
+        res_item['hospital_fee'] = [str(rec*0.5) for rec in item['record_num']]
         res_item['func_fee'] = str(item['func_fee'])
         res_item['exec_fee'] = str(int(item['exec_sec'] * 2/3))
         res_item['total_fee'] = str(item['fixed_fee'] + res_item['exec_fee'] + item['func_fee'])
-
         res.append(res_item)
-
     return jsonify(res)
 
 
 @app.route('/api/data', methods=['POST'])
 def getData():
     filter = request.get_json()
-
-    #add query builder
-    data_query = {'$and':[{'hospital': {'$in': filter.hospitals},
-                    'department': {'$in': filter.department},
-                    'disease': {'$in': filter.disease},
-                    'gender': {'$in': filter.gender},
-                    'age_range': {'$in': filter.age_range}}]}
-
+    print(filter)
+    #add query builder 
+    data_query = {'$and':[{'hospital': {'$in': filter['hospital']},
+                    'department': {'$in': filter['department']},
+                    'disease': {'$in': filter['disease']},
+                    'sex': {'$in': filter['gender']},
+                    'age_range': {'$in': filter['age_range']}}]}
+    #print(data_query)
     data_list = data_col.find(data_query)
     res = []
     for item in data_list:
+        #print(item)
         res_item = {}
         res_item['hospital'] = HOSPITAL[item['hospital']]
         res_item['department'] = DEPARTMENT[item['department']]
         res_item['disease'] = DISEASE[item['disease']]
-        res_item['gender'] = GENDER[item['gender']]
+        res_item['gender'] = GENDER[item['sex']]
         res_item['age_range'] = AGE_RANGE[item['age_range']]
+        res_item['hash'] = str(item['_id'])[-8:]
         res.append(res_item)
 
     return jsonify(res)
@@ -185,32 +204,23 @@ def postService():
     deal['func_fee']=service['func_fee']
     deal['balance_done'] = 1
     deal['result'] = {}
+    deal['hospital_permit'] = 0
+    deal['patient_permit'] = 0
 
     print(deal)
 
     deal_col.insert_one(deal)
 
-    authorization and update exec_status
-    deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':1}})
+    #authorization and update exec_status
+    #deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':1}})
 
-    switch (service['func']) {
-        # Distribution
-        case 0:
-            result = {}
-            break;
-
-        # Linear regression
-        case 3:
-            result = {}
-            break;
-
-            # Linear Model 1
-        case 5:
-            result = {}
-            break;
-        default:
-            print("unidentified function!\n")
-        }
+    if service['func'] == 0:
+        result = {}
+    if service['func'] == 3:
+        result = {}
+    if service['func'] == 5:
+        result = {}
+     
 
     #execution
     ok, exec_sec = call_func(service['func'])

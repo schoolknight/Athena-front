@@ -9,7 +9,7 @@
   <title>Athena Service</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="../static/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
@@ -42,7 +42,6 @@
 
 <body class="fixed-sn light-blue-skin">
   <header>
-
     <!-- Sidebar navigation -->
     <div id="slide-out" class="side-nav side-nav-light fixed">
       <ul class="custom-scrollbar">
@@ -280,34 +279,10 @@
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td></td>
-                      <td>Beijing1</td>
-                      <td>Internal Medicine</td>
-                      <td>diabetes</td>
-                      <td>man</td>
-                      <td>25-30</td>
-                      <td>0x3edbcag09tfa</td>
-                    </tr>
+                  <tbody id='data_table'>
+                   
                     <!-- to be filled with javascript -->
                   </tbody>
-                  <tfoot>
-                    <tr>
-                      <th>
-                      </th>
-                      <th>Hospital
-                      </th>
-                      <th>Department
-                      </th>
-                      <th>Gender
-                      </th>
-                      <th>Age Range
-                      </th>
-                      <th>Hash
-                      </th>
-                    </tr>
-                  </tfoot>
                 </table>
               </div>
             </div>
@@ -576,21 +551,7 @@
       }
     }
 
-    $(document).ready(function() {
-      $('#health-record-table').dataTable({
-
-        columnDefs: [{
-          orderable: false,
-          className: 'select-checkbox select-checkbox-all',
-          targets: 0
-        }],
-        select: {
-          style: 'multi',
-          selector: 'td:first-child'
-        }
-      });
-    });
-
+  
     $(document).ready(function() {
       $('.mdb-select').materialSelect();
     });
@@ -742,9 +703,11 @@
       request.setRequestHeader("Content-Type", "application/json");
       request.onload = () => {
         try {
+          console.log(request.responseText);
           const json = JSON.parse(request.responseText);
           populateData(json);
         } catch (e) {
+          console.log(e);
           console.warn("Cloud not load medical data!");
         }
       };
@@ -755,24 +718,29 @@
 
     function populateData(json) {
       // Clear existing records
-      while (dataBody.firstChild) {
-        dataBody.removeChild(dataBody.firstChild);
+      var totStr = ""
+      for(var i in json){
+        var item = json[i];
+        totStr += '<tr><td></td>';
+        totStr += '<td>'+item.hospital +'</td>'
+        totStr += '<td>'+item.department +'</td>'
+        totStr += '<td>'+item.disease +'</td>'
+        totStr += '<td>'+item.gender +'</td>'
+        totStr += '<td>'+item.age_range +'</td>'
+        totStr += '<td>'+item.hash +'</td></tr>'
       }
-
-      // Populate table
-      json.forEach((row) => {
-        const tr = document.createElement("tr");
-
-        emptytd = document.createElement("td");
-        tr.appendChild(emptytd);
-
-        row.forEach((cell) => {
-          const td = document.createElement("td");
-          td.textContent = cell;
-          tr.appendChild(td);
-        });
-
-        dataBody.appendChild(tr);
+      $('#data_table').html(totStr);
+      $('#health-record-table').dataTable({
+        "pagingType": "full",
+        columnDefs: [{
+          orderable: false,
+          className: 'select-checkbox select-checkbox-all',
+          targets: 0
+        }],
+        select: {
+          style: 'multi',
+          selector: 'td:first-child'
+        }
       });
     }
 

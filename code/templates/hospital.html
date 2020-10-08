@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <link href="{{url_for('static', filename='css/hospital.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='weui/weui.min.css')}}" rel="stylesheet">
+    <script src="{{url_for('static', filename='weui/weui.min.js')}}"></script>
+
+    
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <script src="{{url_for('static', filename='zepto.min.js')}}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    
+  </head>
+  <body>
+    <div class="page">
+        <div class="weui-flex">
+            <div>
+                <div class="page__hd left-sidebar">
+                    <h1 class="page__title">Hospital</h1>
+                    <h1 class="page__title">Dashboard</h1>
+                </div>
+            </div>
+            <div class="weui-flex__item">
+                <div class="page__bd page__bd_spacing">
+                    {% for item in deal_list %}
+                         
+                            <div class="weui-flex">
+                                <div class="weui-flex__item">
+                                    <div class="placeholder">
+                                        <div class="weui-panel weui-panel_access">
+                                            <div class="weui-panel__hd">Active Contract : {{item._id}}
+                                                {%if item.hospital_permit == 1 %}
+                                                    <span class="weui-badge" style="margin-left: 5px;background-color: #06ae56;">Accepted</span>
+                                                {% endif %} 
+                                                {%if item.hospital_permit == 2 %}
+                                                    <span class="weui-badge" style="margin-left: 5px;background-color:#fa9d3b;">Denied</span>
+                                                {% endif %} 
+                                                </div>
+                                            <div class="weui-panel__bd">
+                                                <div class="weui-media-box weui-media-box_text">
+                                                    <h4 class="weui-media-box__title">Issue Time: {{item.issue_time}}</h4>
+                                                    <p class="weui-media-box__desc">Balance: {{item.issue_time}}</p>
+                                                </div> 
+                                            </div>
+                                            <div class="weui-panel__ft">
+                                                {%if item.hospital_permit == 0 %}
+                                                    <a href="javascript:showDialog('{{item._id}}');" class="weui-cell weui-cell_active weui-cell_access weui-cell_link">
+                                                        <div class="weui-cell__bd">Operate</div>
+                                                        <span class="weui-cell__ft"></span>
+                                                    </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    {% endfor %}
+                    
+                </div>
+                
+            
+            </div>
+            
+        </div>
+        
+       
+    </div>
+   
+    <script type="text/javascript">
+        var dia_flag = 0;
+        $(function(){
+          
+            var if_toast = {{if_toast}};
+            if (if_toast == 1){
+                weui.toast('New Contract', 3000);
+            }
+
+            setInterval(() => {
+                if (dia_flag == 0){
+                    window.location.href = "/hospital/{{deal_list | length}}";
+                }
+            }, 10000);
+            
+        });
+        function hospitalOperate(curId, opType){
+            $.get('/hospital_operate?deal=' + curId + '&op=' + opType, function(){
+                window.location.reload();
+            });
+        }
+        function showDialog(tarId){
+            dia_flag = 1;
+            var $dialog = weui.dialog({
+                title: 'Contract: ' + tarId,
+                content: 'Accepted or Deny',
+                className: 'custom-classname',
+                buttons: [{
+                    label: 'Deny',
+                    type: 'default',
+                    onClick: function () { 
+                         hospitalOperate(tarId, 1)
+                    }
+                }, {
+                    label: 'Accept',
+                    type: 'primary',
+                    onClick: function () {
+                        hospitalOperate(tarId, 0)
+                    }
+                }]
+            });
+            $('.weui-mask').on('click',function(){
+                $dialog.hide();
+                dia_flag = 0
+            });
+        };
+
+        
+    </script>
+  </body>
+</html>
