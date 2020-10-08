@@ -50,8 +50,16 @@
                                             <div class="weui-panel__bd">
                                                 <div class="weui-media-box weui-media-box_text">
                                                     <h4 class="weui-media-box__title">Issue Time: {{item.issue_time}}</h4>
-                                                    <p class="weui-media-box__desc">Balance: {{item.issue_time}}</p>
-                                                </div> 
+                                                    {%  if item.exec_status == 2 %}
+                                                        <p class="weui-media-box__desc">Waiting for Authorization.</p>
+                                                    {% endif %}
+                                                    {%  if item.exec_status == 1 %}
+                                                        <p class="weui-media-box__desc">Computing...</p>
+                                                    {% endif %}
+                                                    {%  if item.exec_status == 0 %}
+                                                        <p class="weui-media-box__desc">Finished.</p>
+                                                    {% endif %}
+                                                    </div> 
                                             </div>
                                             <div class="weui-panel__ft">
                                                 {%if item.hospital_permit == 0 %}

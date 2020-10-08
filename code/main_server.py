@@ -6,6 +6,7 @@ from datetime import datetime
 import pymongo
 import time
 from bson import ObjectId
+import requests
 
 app = Flask(__name__)
 
@@ -79,14 +80,23 @@ def hospital(num):
 def patientOperate():
     deal_id = request.args.get('deal')
     op_type = int(request.args.get('op')) + 1
-    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type}})
+    res = deal_col.find_one({'_id': ObjectId(deal_id)})
+    if res['hospital_permit'] > 0 and op_type > 0:        
+        deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type, 'exec_status': 1}})
+    else:
+        deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type}})
     return 'ok'
 
 @app.route('/hospital_operate')
 def hospitalOperate():
     deal_id = request.args.get('deal')
     op_type = int(request.args.get('op')) + 1
-    deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
+    res = deal_col.find_one({'_id': ObjectId(deal_id)})
+    #deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
+    if res['patient_permit'] > 0 and op_type > 0:        
+        deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type, 'exec_status': 1}})
+    else:
+        deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
     return 'ok'
 
 
@@ -240,6 +250,23 @@ def call_func(id):
     #calling sgx function
 
     return 0, 30
+
+@app.route('/test',)
+def testRpc():
+    cur_url =  'http://172.16.1.129:8545'
+    headers = {'content-type': 'application/json'}
+
+    # Example echo method
+    payload = {
+        "method": "comfirmation",
+        "params": ["0x4e03657aea45a94fc7d47ba826c8d667c0d1e6e33a64a036ec44f58fa12d6c45","0xf4128988cbe7df8315440adde412a8955f7f5ff9a5468a791433727f82717a6753bd7188207952 0x60320b8a71bc314404ef7d194ad8cac0bee1e331", "0xf4128988cbe7df8315440adde412a8955f7f5ff9a5468a791433727f82717a6753bd7188207952", "0x350dc2cd494ca089518a3e5a8773e5329c5c4a65", "0xd7dff5ff9a5fd71882a791433727f82717a670795241246853b8315440a8955f7de412a8988cbe"],
+        "jsonrpc": "2.0",
+        "id": 1,
+    }
+    response = requests.post(cur_url, data=json.dumps(payload), headers=headers).json()
+
+    print(response)
+    return 'ok'
 
 
 if __name__ == '__main__':
