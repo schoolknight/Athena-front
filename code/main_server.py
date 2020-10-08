@@ -147,13 +147,11 @@ def getBalance():
         res_item['service_id'] = str(item['service_id'])
         res_item['issue_time'] = item['issue_time']
         res_item['hospitals'] = [str(hos) for hos in item['hospitals']]
-        res_item['hospital_fee'] = [str(rec*0.5) for rec in item['record_num'])
+        res_item['hospital_fee'] = [str(rec*0.5) for rec in item['record_num']]
         res_item['func_fee'] = str(item['func_fee'])
         res_item['exec_fee'] = str(int(item['exec_sec'] * 2/3))
         res_item['total_fee'] = str(item['fixed_fee'] + res_item['exec_fee'] + item['func_fee'])
-
         res.append(res_item)
-
     return jsonify(res)
 
 
@@ -208,27 +206,16 @@ def postService():
 
     deal_col.insert_one(deal)
 
-    authorization and update exec_status
-    deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':1}})
+    #authorization and update exec_status
+    #deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':1}})
 
-    switch (service['func']) {
-        # Distribution
-        case 0:
-            result = {}
-            break;
-
-        # Linear regression
-        case 3:
-            result = {}
-            break;
-
-            # Linear Model 1
-        case 5:
-            result = {}
-            break;
-        default:
-            print("unidentified function!\n")
-        }
+    if service['func'] == 0:
+        result = {}
+    if service['func'] == 3:
+        result = {}
+    if service['func'] == 5:
+        result = {}
+     
 
     #execution
     ok, exec_sec = call_func(service['func'])
