@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from flask import render_template
+from flask import render_template, json
 #import configparser
 import pymongo
 import time
@@ -74,7 +74,17 @@ def athena_service():
 
 @app.route('/athena-order')
 def athena_order():
-        return render_template('athena-order.html')
+    order_path = 'order.json'
+    orders = json.load(open(order_path))
+    # print(orders)
+    return render_template('athena-order.html')
+
+@app.route('/api/order')
+def api_order():
+    order_path = 'order.json'
+    orders = json.load(open(order_path))
+    # print(orders)
+    return jsonify(orders)
 
 @app.route('/athena-statistics')
 def athena_statistics():
