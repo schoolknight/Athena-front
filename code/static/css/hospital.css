@@ -2,11 +2,18 @@
     margin: 5px;
     padding: 10px;
     background-color: var(--weui-BG-1);
-    text-align: center;
     color: var(--weui-FG-1);
 }
 
-.title {
-    text-align: center;
+.left-sidebar {
     background-color: #91d300;
+    height: 1000px;
+}
+
+.accept{
+    background-color: #06ae56;
+}
+
+.deny{
+    background-color: #fa9d3b;
 }

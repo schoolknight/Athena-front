@@ -7,7 +7,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Bootstrap 101 Template</title>
 
-    <link href="{{url_for('static', filename='css/phone.css')}}" rel="stylesheet">
+    <link href="{{url_for('static', filename='css/hospital.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='weui/weui.min.css')}}" rel="stylesheet">
     <script src="{{url_for('static', filename='weui/weui.min.js')}}"></script>
 
@@ -26,8 +26,9 @@
     <div class="page">
         <div class="weui-flex">
             <div>
-                <div class="page__hd">
+                <div class="page__hd left-sidebar">
                     <h1 class="page__title">Hospital</h1>
+                    <h1 class="page__title">Dashboard</h1>
                 </div>
             </div>
             <div class="weui-flex__item">
@@ -38,7 +39,14 @@
                                 <div class="weui-flex__item">
                                     <div class="placeholder">
                                         <div class="weui-panel weui-panel_access">
-                                            <div class="weui-panel__hd">Active Contract : {{item._id}}</div>
+                                            <div class="weui-panel__hd">Active Contract : {{item._id}}
+                                                {%if item.hospital_permit == 1 %}
+                                                    <span class="weui-badge" style="margin-left: 5px;background-color: #06ae56;">Accepted</span>
+                                                {% endif %} 
+                                                {%if item.hospital_permit == 2 %}
+                                                    <span class="weui-badge" style="margin-left: 5px;background-color:#fa9d3b;">Denied</span>
+                                                {% endif %} 
+                                                </div>
                                             <div class="weui-panel__bd">
                                                 <div class="weui-media-box weui-media-box_text">
                                                     <h4 class="weui-media-box__title">Issue Time: {{item.issue_time}}</h4>
@@ -52,18 +60,6 @@
                                                         <span class="weui-cell__ft"></span>
                                                     </a>
                                                 {% endif %}
-                                                {%if item.hospital_permit == 1 %}
-                                                <div class="weui-cell weui-cell_active">
-                                                    <div class="weui-cell__bd">Accepted</div>
-                                                    <span class="weui-cell__ft"></span>
-                                                </div>
-                                                {% endif %} 
-                                                {%if item.hospital_permit == 2 %}
-                                                <div class="weui-cell weui-cell_active">
-                                                    <div class="weui-cell__bd">Denied</div>
-                                                    <span class="weui-cell__ft"></span>
-                                                </div>
-                                                {% endif %} 
                                             </div>
                                         </div>
                                     </div>
@@ -81,67 +77,54 @@
         
        
     </div>
-    <div id="dialogs">
-    <div class="js_dialog" id="iosDialog2" style="display: none;">
-        <div class="weui-mask"></div>
-        <div id="js_dialog_2" class="weui-half-screen-dialog">
-            <div class="weui-half-screen-dialog__hd">
-              <div class="weui-half-screen-dialog__hd__side">
-                <button style="display: none;" class="weui-icon-btn">返回<i class="weui-icon-back-arrow-thin"></i></button>
-                <button style="display: none;" class="weui-icon-btn" id="close_button">Close<i class="weui-icon-close-thin"></i></button>
-              </div>
-              <div class="weui-half-screen-dialog__hd__main">
-                <strong class="weui-half-screen-dialog__title">Smart Contract</strong>
-                <span class="weui-half-screen-dialog__subtitle" id='dialog_contract_id'></span>
-              </div>
-             
-            </div>
-            <div class="weui-half-screen-dialog__bd">
-              <p class="weui-half-screen-dialog__desc">
-                Agree or Not?
-              </p>
-            </div>
-            <div class="weui-half-screen-dialog__ft">
-                <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_primary">Agree</a>
-                <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_default">Deny</a>               
-            </div>
-        </div>
-    </div>
-    </div>
+   
     <script type="text/javascript">
-        var curId = "";
+        var dia_flag = 0;
         $(function(){
-            var $dialog2 = $('#js_dialog_2'),
-                $iosDialog2 = $('#iosDialog2');
-    
-            $('#dialogs').on('click', '.weui-mask', function(){
-                $(this).parents('.js_dialog').fadeOut(200);
-                $dialog2.removeClass('weui-half-screen-dialog_show');
-            });
+          
             var if_toast = {{if_toast}};
             if (if_toast == 1){
                 weui.toast('New Contract', 3000);
             }
 
-            setTimeout(() => {
-                window.location.href = "/hospital/{{deal_list | length}}";
+            setInterval(() => {
+                if (dia_flag == 0){
+                    window.location.href = "/hospital/{{deal_list | length}}";
+                }
             }, 10000);
             
         });
-
-        function showDialog(tarId){
-            curId = tarId;
-            $('#dialog_contract_id').text(tarId);
-            var $dialog2 = $('#js_dialog_2'),
-                $iosDialog2 = $('#iosDialog2');
-            $iosDialog2.fadeIn(200);
-            $dialog2.addClass('weui-half-screen-dialog_show');
-        };
-        function patientOperate(opType){
+        function hospitalOperate(curId, opType){
             $.get('/hospital_operate?deal=' + curId + '&op=' + opType, function(){
                 window.location.reload();
             });
         }
+        function showDialog(tarId){
+            dia_flag = 1;
+            var $dialog = weui.dialog({
+                title: 'Contract: ' + tarId,
+                content: 'Accepted or Deny',
+                className: 'custom-classname',
+                buttons: [{
+                    label: 'Deny',
+                    type: 'default',
+                    onClick: function () { 
+                         hospitalOperate(tarId, 1)
+                    }
+                }, {
+                    label: 'Accept',
+                    type: 'primary',
+                    onClick: function () {
+                        hospitalOperate(tarId, 0)
+                    }
+                }]
+            });
+            $('.weui-mask').on('click',function(){
+                $dialog.hide();
+                dia_flag = 0
+            });
+        };
+
         
     </script>
   </body>
