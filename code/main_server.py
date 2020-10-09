@@ -147,6 +147,7 @@ def getOrders():
         res_item['function'] = FUNCTION[item['func']]
         res_item['fixed_fee'] = str(item['fixed_fee'])
         res_item['security'] = item['security']
+        res_item['result'] = item['result']
         res.append(res_item)
 
     return jsonify(res)
@@ -163,11 +164,11 @@ def getBalance():
         res_item['hospitals'] = [HOSPITAL[hos] for hos in item['hospitals']]
         res_item['hospital_fee'] = [str(rec*0.5) for rec in item['record_num']]
         res_item['func_fee'] = str(item['func_fee'])
+        res_item['exec_sec'] = str(item['exec_sec'])
         exec_fee = int(item['exec_sec'] * 2/3)
         res_item['exec_fee'] = str(exec_fee)
         res_item['total_fee'] = str(item['fixed_fee'] + exec_fee + item['func_fee'])
         res.append(res_item)
-    print(res)
     return jsonify(res)
 
 
@@ -181,11 +182,10 @@ def getData():
                     'disease': {'$in': filter['disease']},
                     'sex': {'$in': filter['gender']},
                     'age_range': {'$in': filter['age_range']}}]}
-    #print(data_query)
+
     data_list = data_col.find(data_query)
     res = []
     for item in data_list:
-        #print(item)
         res_item = {}
         res_item['hospital'] = HOSPITAL[item['hospital']]
         res_item['department'] = DEPARTMENT[item['department']]
@@ -222,49 +222,51 @@ def postService():
     deal['hospital_permit'] = 0
     deal['patient_permit'] = 0
 
-    print(deal)
-
     deal_col.insert_one(deal)
 
-    #authorization and update exec_status
-    #deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':1}})
+    #wait for authorization
+    auth_pending_deal = deal_col.find({'service_id': service_id - 1})
+    while (auth_pending_deal[0]['exec_status'] != 1):
+        auth_pending_deal = deal_col.find({'service_id': service_id - 1})
 
-    # if service['func'] == 0:
-    #     result = {'type': 0}
-    #     func_id = 1
-    # if service['func'] == 3:
-    #     result = {'type': 1}
-    #     # 'params': [4.345,0.934,-2.061,1.672,1.145,11.537,88.984,-0.094]
-    #     func_id = 2
-    # if service['func'] == 5:
-    #     result = {'type': 2}
-    #     # 'predict': [74.135, 193.028, 129.666, 169.199, 75.297, 157.860], 'gt': [75.000, 166.000, 168.000, 85.000, 59.000, 276.000]
-    #     func_id = 3
-    #
-    #
-    # #execution
-    # ok, exec_sec = call_func(func_id)
-    # if ok == 0:
-    #     print('Calling function' + FUNCTION[service['func']] + 'succeed!\n')
-    #     res = {'$set': {'result': result}}
-    #     deal_col.update({'service_id': service_id - 1}, {'$set': {'exec_status':0,
-    #                         'order_status':0,
-    #                         'balance_done':0,
-    #                         'exec_sec': exec_sec,
-    #                         'result': result}
-    #                         })
-    # else:
-    #     print("calling function failed!\n")
+    print("Authorization compeleted, start invoking computing infrastructure.\n")
 
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+    if service['func'] == 0:
+        result = {'type': 0}
+        func_id = 1
+    if service['func'] == 3:
+        result = {'type': 1}
+        func_id = 2
+    if service['func'] == 5:
+        result = {'type': 2}
+        func_id = 3
+
+    #execution
+    ok, exec_sec = call_func(func_id)
+    if ok == 0:
+        print('Calling function' + FUNCTION[service['func']] + 'succeed, time collapsed: ' + str(exec_sec) + '\n')
+        res = {'$set': {'result': result}}
+        deal_col.update({'service_id': service_id - 1}, {'$set': {'exec_status':0,
+                            'order_status':0,
+                            'balance_done':0,
+                            'exec_sec': exec_sec,
+                            'result': result}
+                            })
+    else:
+        print('Calling function' + FUNCTION[service['func']] + 'failed!\n')
+
+    return json.dumps({'success':True})
 
 
 def call_func(id):
     with grpc.insecure_channel('166.111.131.17:7666') as channel:
         stub = sgx_pb2_grpc.SecureFuncStub(channel)
         response = stub.SGXFunc(sgx_pb2.FuncId(value=id))
-        print("Secure function executed: " + str(response.value))
+        print("Secure function executed: " + str(response.value) + '.\n')
     return 0, response.value
+
+# def call_func(id):
+#     return 0, 10
 
 @app.route('/test',)
 def testRpc():

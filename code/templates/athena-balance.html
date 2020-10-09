@@ -9,7 +9,7 @@
   <title>Athena console</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="../static/fontawesome/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
@@ -19,7 +19,7 @@
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="../static/css/athena.css">
   <!-- MDBootstrap Datatables  -->
-  <link href="../static/css/addons/datatables2.min.css" rel="stylesheet">
+  <link href="../static/mdb/addons/datatables2.min.css" rel="stylesheet">
 
   <!-- jQuery -->
   <script type="text/javascript" src="../static/jquery.min.js"></script>
@@ -253,14 +253,6 @@
   <script type="text/javascript">
 
   var balance_list = [];
-  var used_total_fee = 0;
-  var start_balance = 10000;
-
-  function get_balance(){
-   now = start_balance - used_total_fee;
-   balance_str = now.toString();
-   $('#balance').html(balance_str);
-  }
 
  function refreshbalance(){
    $.getJSON("/api/balance", function(result){
@@ -290,7 +282,8 @@
 
  function updatePage(){
    var balance_tr = [];
-   used_total_fee = 0;
+   var used_total_fee = 0;
+   var balance = 0;
    var tableStr = '<thead><tr>\
                    <th scope="col">Service ID</th>\
                    <th scope="col">Issue Time</th>\
@@ -315,11 +308,12 @@
                                 item['issue_time'] + '</td><td>' +
                                 hos_fee + '</td><td>' +
                                 item['func_fee'] + '</td><td>' +
-                                item['exec_fee'] + '</td><td>' +
+                                item['exec_fee'] + '(' + item['exec_sec'] + 's)' + '</td><td>' +
                                 item['total_fee'] + '</td><td>'+
                                 '</td></tr>';
    }
-
+   balance = 10000 - used_total_fee;
+   $('#balance').html(balance.toString());
    for (var i in balance_tr) {
      tableStr += balance_tr[i];
    }
@@ -333,7 +327,6 @@
 
  setInterval(()=> {
    refreshbalance();
-   get_balance()
  }, 10000);
   </script>
 </body>

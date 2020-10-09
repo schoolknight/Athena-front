@@ -9,7 +9,7 @@
   <title>Athena Service</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <link rel="stylesheet" href="../static/fontawesome/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
@@ -395,21 +395,43 @@
 
           <!-- Section Input Coloumn -->
           <section>
-            <div class="card-body">
-              <h5 class="card-title">Input coloumn</h5>
-              <select id="coloumn-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
-                <option value="" disabled selected>Choose Input Coloumns</option>
-                <option value=0>bmi - Body Mass Index</option>
-                <option value=1>bp - Average Blood Pressure)</option>
-                <option value=2>s1 - T-Cells</option>
-                <option value=3>s2 - Low-density lipoproteins</option>
-                <option value=4>s3 - High-density lipoproteins</option>
-                <option value=5>s4 - Thyroid Stimulating hormone</option>
-                <option value=6>s5 - Lamotrigine </option>
-                <option value=7>s6 - Blood Sugar Level</option>
-              </select>
-              <label class="mdb-main-label">Diabetes dataset is using</label>
-              <button class="btn-save btn btn-primary btn-sm">Save</button>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h5 class="card-title">Input coloumn</h5>
+                  <select id="coloumn-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                    <option value="" disabled selected>Choose Input Coloumns</option>
+                    <option value=0>bmi - Body Mass Index</option>
+                    <option value=1>bp - Average Blood Pressure)</option>
+                    <option value=2>s1 - T-Cells</option>
+                    <option value=3>s2 - Low-density lipoproteins</option>
+                    <option value=4>s3 - High-density lipoproteins</option>
+                    <option value=5>s4 - Thyroid Stimulating hormone</option>
+                    <option value=6>s5 - Lamotrigine </option>
+                    <option value=7>s6 - Blood Sugar Level</option>
+                  </select>
+                  <label class="mdb-main-label">Diabetes dataset is using</label>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h5 class="card-title">Target coloumn</h5>
+                  <select id="coloumn-option" class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+                    <option value="" disabled selected>Choose Input Coloumns</option>
+                    <option value=0>bmi - Body Mass Index</option>
+                    <option value=1>bp - Average Blood Pressure)</option>
+                    <option value=2>s1 - T-Cells</option>
+                    <option value=3>s2 - Low-density lipoproteins</option>
+                    <option value=4>s3 - High-density lipoproteins</option>
+                    <option value=5>s4 - Thyroid Stimulating hormone</option>
+                    <option value=6>s5 - Lamotrigine </option>
+                    <option value=7>s6 - Blood Sugar Level</option>
+                  </select>
+                  <label class="mdb-main-label">Diabetes dataset is using</label>
+                  <button class="btn-save btn btn-primary btn-sm">Save</button>
+                </div>
+              </div>
             </div>
           </section>
           <!--/ Section Input Coloumn -->
@@ -628,25 +650,23 @@
 
       service.hospitals = hospitals.map(x => parseInt(x, 10));
 
-      //collect record_total
+      //collect record_num[according to case]
 
       if (($('#gender-option').val()).length == 1) {
         if(($('#age_range-option').val()).length == 1) {
+          service.record_num = [2, 1, 3];
           service.record_total = 6;
         }
         else{
-          service.record_total = 240;
+          service.record_num = [120, 120, 120];
+          service.record_total = 360;
         }
       }
       else{
-        service.record_total = 360;
+        service.record_num = [150, 150, 150];
+        service.record_total = 450;
       }
 
-      var hosNum = service.hospitals.length;
-
-      for (var i = 0; i < hosNum; i++) {
-        service.record_num[i] = service.record_total / hosNum;
-      }
       service.func = parseInt($('#function-option').val(), 10);
 
       service.func_fee = functionFee[service.func];
@@ -672,7 +692,6 @@
         service.security.seal = "Off";
       }
 
-      console.log(JSON.stringify(service));
     }
 
     function loadData() {
@@ -703,17 +722,14 @@
       request.setRequestHeader("Content-Type", "application/json");
       request.onload = () => {
         try {
-          console.log(request.responseText);
           const json = JSON.parse(request.responseText);
           populateData(json);
         } catch (e) {
           console.log(e);
-          console.warn("Cloud not load medical data!");
         }
       };
 
       request.send(filterJSON);
-      console.log('filerJSON'+ filterJSON)
     }
 
     function populateData(json) {
@@ -746,9 +762,6 @@
 
     function sendTransaction() {
       var serviceJSON = JSON.stringify(service);
-
-      console.log("service JSON" + serviceJSON);
-
       var xhr = new XMLHttpRequest();
       xhr.open("POST", "/api/service", true);
       xhr.setRequestHeader("Content-Type", "application/json");
