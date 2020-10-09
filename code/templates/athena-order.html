@@ -9,7 +9,7 @@
   <title>Athena console</title>
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../static/css/all.css">
+  <link rel="stylesheet" href="../static/fontawesome/css/all.css">
   <!-- Google Fonts Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
   <!-- Bootstrap core CSS -->
@@ -19,7 +19,7 @@
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="../static/css/athena.css">
   <!-- MDBootstrap Datatables  -->
-  <link href="../static/css/addons/datatables2.min.css" rel="stylesheet">
+  <link href="../static/mdb/addons/datatables2.min.css" rel="stylesheet">
 
   <!-- jQuery -->
   <script type="text/javascript" src="../static/jquery.min.js"></script>
@@ -346,7 +346,37 @@
       </div>
 
 
-
+      <div class="modal fade right" id="result-modal" tabindex="-1" role="dialog" aria-labelledby="result-modal" area-hidden="true">
+        <div class="modal-dialog modal-full-height modal-right" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title w-100" id="result-modal">Results</h4>
+            </div>
+            <div class="modal-body">
+              <div class="card-wrapper">
+                <div class="card">
+                    <div class="card-up">
+                      <img class="card-img-top" src="../static/img/THU-BG.jpg">
+                    </div>
+                    <div class="avatar mx-auto white">
+                      <img src="static/img/THU.png" class="rounded-circle">
+                    </div>
+                    <div class="card-body card-body-cascade">
+                      <h5 class="pink-text pb-2 pt-1">Computation Result</h5>
+                      <div id="result-panel">
+                        <!-- rendered by javascript -->
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Export</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </main>
@@ -408,7 +438,7 @@
       }
 
       if (item['order_status'] == 0){
-        resbuttonStr='<a class="btn btn-success btn-primary"><i class="fas fa-leaf"></i></a>';
+        resbuttonStr='<a class="btn btn-success btn-primary" data-toggle="modal" data-target="#result-modal" onclick="showResult(' + i + ')"><i class="fas fa-leaf"></i></a>';
         statusStr = 'Completed';
       } else {
         statusStr = 'In progress';
@@ -445,18 +475,18 @@
     }
 
     digestStr = '<li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-hospital green-text mr-5"></i>' + hospitalStr +
-                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-hospital green-text mr-5"></i>' + numStr +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-list-ol mr-5"></i>' + numStr +
                 '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-clock mr-5"></i>' + order_list[tarId]['issue_time'] +
                 '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-tasks mr-5"></i>' + order_list[tarId]['function'] +
-                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-trash-alt mr-5"></i>' + 'Scrub: ' + order_list[tarId]['security']['scrubbing'] + ' ' +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-trash-alt mr-5"></i>' + 'Scrub: ' + order_list[tarId]['security']['scrub'] + ' ' +
                       'DP: ' + order_list[tarId]['security']['dp'] + ' ' +
-                      'Seal: ' + order_list[tarId]['security']['sealing'] +
-                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-credit-card mr-5"></i>' + order_list[tarId]['fee'] +
+                      'Seal: ' + order_list[tarId]['security']['seal'] +
+                '</li><li class="list-group-item"><div class="md-v-line"></div><i class="fas fa-credit-card mr-5"></i>' + order_list[tarId]['fixed_fee'] +
                 '</li>'
 
     var exec_status = order_list[tarId]['exec_status'];
     switch(exec_status){
-      case 0:
+      case 2:
         stepperStr = '<li class="completed">\
                           <a href="#!">\
                             <span class="circle">1</span>\
@@ -526,7 +556,7 @@
                         </a>\
                       </li>'
       break;
-      case 2:
+      case 0:
       stepperStr =  '<li class="completed">\
                         <a href="#!">\
                           <span class="circle">1</span>\
@@ -561,8 +591,141 @@
 
 
     $('#digest-list').html(digestStr);
-    console.log(stepperStr);
+
     $('#stepper').html(stepperStr);
+
+  }
+
+  function showResult(tarId) {
+    contentStr = "";
+    contentType = order_list[tarId]['result']['type']
+    switch(contentType) {
+      case 0:
+        contentStr = '<div class="row">\
+                          <div class="card-body pb-0">\
+                             <canvas id="bmi-pic" height="175"></canvas>\
+                          </div>\
+                      </div>\
+                      <div class="row">\
+                          <div class="card-body pb-0">\
+                              <canvas id="bp-pic" height="175"></canvas>\
+                          </div>\
+                      </div>';
+        break;
+      case 1:
+        contentStr = '<table class="table table-hover">\
+                        <thead>\
+                        <tr><th scope="col">Paramter</th><th scope="col">Value</th></tr>\
+                        </thead>\
+                        <tbody>\
+                        <tr><td>w0</td><td>-351.045</td></tr>\
+                        <tr><td>w1</td><td>4.345</td></tr>\
+                        <tr><td>w2</td><td>0.934</td></tr>\
+                        <tr><td>w3</td><td>-2.061</td></tr>\
+                        <tr><td>w4</td><td>1.672</td></tr>\
+                        <tr><td>w5</td><td>1.145</td></tr>\
+                        <tr><td>w6</td><td>11.537</td></tr>\
+                        <tr><td>w7</td><td>88.984</td></tr>\
+                        <tr><td>w8</td><td>-0.094 </td></tr>\
+                        </tbody></table>';
+        break;
+
+      case 2:
+        contentStr = '<table class="table table-hover">\
+                        <thead>\
+                        <tr><th scope="col">Predict Value</th><th scope="col">Ground Truth</th></tr>\
+                        </thead>\
+                        <tbody>\
+                        <tr><td>74.135</td><td>75.000</td></tr>\
+                        <tr><td>193.028</td><td>166.000</td></tr>\
+                        <tr><td>129.666</td><td>168.000</td></tr>\
+                        <tr><td>169.199</td><td>85.000</td></tr>\
+                        <tr><td>75.297</td><td>59.000</td></tr>\
+                        <tr><td>157.860</td><td>276.000</td></tr>\
+                        </tbody></table>';
+    }
+    $('#result-panel').html(contentStr);
+
+    var ctx = document.getElementById("bmi-pic").getContext('2d');
+    var bmiChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+    labels: ["18-23", "23-28", "28-33", "33-38", "38-43"],
+    datasets: [{
+    label: 'Body Mass Index Distribution',
+    data: [27, 109, 49, 17, 5],
+    backgroundColor: [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)'
+    ],
+    borderColor: [
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)'
+    ],
+    borderWidth: 1
+    }]
+    },
+    options: {
+    scales: {
+    yAxes: [{
+    ticks: {
+    beginAtZero: true
+    }
+    }]
+    }
+    }
+    });
+
+    var ctx = document.getElementById("bp-pic").getContext('2d');
+    var bpChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+    labels: ["70-76", "76-82", "82-88", "88-94", "94-100", "100-106", "106-112", "112-118", "118-124"],
+    datasets: [{
+    label: 'Blood Presure Distribution',
+    data: [8, 12, 29, 41, 35, 24, 33, 17, 8],
+    backgroundColor: [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)'
+    ],
+    borderColor: [
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)'
+    ],
+    borderWidth: 1
+    }]
+    },
+    options: {
+    scales: {
+    yAxes: [{
+    ticks: {
+    beginAtZero: true
+    }
+    }]
+    }
+    }
+    });
+
 
   }
 
@@ -571,6 +734,10 @@
    setInterval(()=> {
      refreshOrders();
    }, 20000);
+
+
+
+
   </script>
 </body>
 

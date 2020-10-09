@@ -11,7 +11,7 @@
     <link href="{{url_for('static', filename='weui/weui.min.css')}}" rel="stylesheet">
     <script src="{{url_for('static', filename='weui/weui.min.js')}}"></script>
 
-    
+
     <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
     <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
     <!--[if lt IE 9]>
@@ -20,7 +20,7 @@
     <![endif]-->
     <script src="{{url_for('static', filename='zepto.min.js')}}"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-    
+
   </head>
   <body>
     <div class="page">
@@ -29,7 +29,7 @@
         </div>
         <div class="page__bd page__bd_spacing">
             {% for item in deal_list %}
-                 
+
                     <div class="weui-flex">
                         <div class="weui-flex__item">
                             <div class="placeholder">
@@ -47,7 +47,7 @@
                                         {%  if item.exec_status == 0 %}
                                             <p class="weui-media-box__desc">Finished.</p>
                                         {% endif %}
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="weui-panel__ft">
                                         {%if item.patient_permit == 0 %}
@@ -61,21 +61,21 @@
                                             <div class="weui-cell__bd">Accepted</div>
                                             <span class="weui-cell__ft"></span>
                                         </div>
-                                        {% endif %} 
+                                        {% endif %}
                                         {%if item.patient_permit == 2 %}
                                         <div class="weui-cell weui-cell_active">
                                             <div class="weui-cell__bd">Denied</div>
                                             <span class="weui-cell__ft"></span>
                                         </div>
-                                        {% endif %} 
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                
+
             {% endfor %}
-            
+
         </div>
     </div>
     <div id="dialogs">
@@ -91,7 +91,7 @@
                 <strong class="weui-half-screen-dialog__title">Smart Contract</strong>
                 <span class="weui-half-screen-dialog__subtitle" id='dialog_contract_id'></span>
               </div>
-             
+
             </div>
             <div class="weui-half-screen-dialog__bd">
               <p class="weui-half-screen-dialog__desc">
@@ -100,7 +100,7 @@
             </div>
             <div class="weui-half-screen-dialog__ft">
                 <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_primary">Agree</a>
-                <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_default">Deny</a>               
+                <a href="javascript:patientOperate(0);" class="weui-btn weui-btn_default">Deny</a>
             </div>
         </div>
     </div>
@@ -110,7 +110,7 @@
         $(function(){
             var $dialog2 = $('#js_dialog_2'),
                 $iosDialog2 = $('#iosDialog2');
-    
+
             $('#dialogs').on('click', '.weui-mask', function(){
                 $(this).parents('.js_dialog').fadeOut(200);
                 $dialog2.removeClass('weui-half-screen-dialog_show');
@@ -123,7 +123,7 @@
             setTimeout(() => {
                 window.location.href = "/phone/{{deal_list | length}}";
             }, 10000);
-            
+
         });
 
         function showDialog(tarId){
@@ -139,7 +139,7 @@
                 window.location.reload();
             });
         }
-        
+
     </script>
   </body>
 </html>

@@ -1,0 +1,40 @@
+[{
+    "service_id": "13321",
+    "issue_time": "2020-9-15-14:30",
+    "hospitals": ["BH1", "BH2", "BH3", "BH4"],
+    "hospital_fee": ["100", "200", "300", "400"],
+    "func_fee": "5",
+    "exec_fee": "20",
+    "total_fee": "1025"
+  },
+
+  {
+    "service_id": "13322",
+    "issue_time": "2020-9-15-14:30",
+    "hospitals": ["BH1", "BH2", "BH3", "BH4"],
+    "hospital_fee": ["200", "100", "300", "400"],
+    "func_fee": "5",
+    "exec_fee": "20",
+    "total_fee": "1025"
+  },
+
+  {
+    "service_id": "13323",
+    "issue_time": "2020-9-15-14:30",
+    "hospitals": ["BH1", "BH2", "BH3"],
+    "hospital_fee": ["100", "200", "200"],
+    "func_fee": "15",
+    "exec_fee": "15",
+    "total_fee": "530"
+  },
+
+  {
+    "service_id": "13324",
+    "issue_time": "2020-9-15-14:30",
+    "hospitals": ["BH1", "BH2", "BH3"],
+    "hospital_fee": ["100", "200", "100"],
+    "func_fee": "15",
+    "exec_fee": "15",
+    "total_fee": "430"
+  }
+]

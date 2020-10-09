@@ -3,10 +3,13 @@ from flask import Flask, jsonify, request
 from flask import render_template
 from flask import json
 from datetime import datetime
+import grpc
 import pymongo
 import time
 from bson import ObjectId
 import requests
+import sgx_pb2
+import sgx_pb2_grpc
 
 app = Flask(__name__)
 
@@ -25,6 +28,7 @@ deal_col = mongo[database_str][deal_col_str]
 server_dir = os.path.dirname(__file__)
 data_path = os.path.join(server_dir, "data.json")
 order_path = os.path.join(server_dir, "order.json")
+balance_path = os.path.join(server_dir, "balance.json")
 
 service_id = 13321
 HOSPITAL = ['BH1', 'BH2', 'BH3']
@@ -61,7 +65,7 @@ def phone(num):
     if int(num) > 0 and len(res) > int(num):
         return render_template('phone.html',deal_list=res, if_toast=1)
     else:
-        return render_template('phone.html',deal_list=res, if_toast=0) 
+        return render_template('phone.html',deal_list=res, if_toast=0)
 
 @app.route('/hospital/<num>')
 def hospital(num):
@@ -81,7 +85,7 @@ def patientOperate():
     deal_id = request.args.get('deal')
     op_type = int(request.args.get('op')) + 1
     res = deal_col.find_one({'_id': ObjectId(deal_id)})
-    if res['hospital_permit'] > 0 and op_type > 0:        
+    if res['hospital_permit'] > 0 and op_type > 0:
         deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type, 'exec_status': 1}})
     else:
         deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'patient_permit': op_type}})
@@ -93,7 +97,7 @@ def hospitalOperate():
     op_type = int(request.args.get('op')) + 1
     res = deal_col.find_one({'_id': ObjectId(deal_id)})
     #deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
-    if res['patient_permit'] > 0 and op_type > 0:        
+    if res['patient_permit'] > 0 and op_type > 0:
         deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type, 'exec_status': 1}})
     else:
         deal_col.update_one({'_id': ObjectId(deal_id)}, {'$set':{'hospital_permit': op_type}})
@@ -136,13 +140,14 @@ def getOrders():
         res_item = {}
         res_item['service_id'] = str(item['service_id'])
         res_item['issue_time'] = item['issue_time']
-        res_item['hospitals'] = [str(hos) for hos in item['hospitals']]
-        res_item['record_num'] = str(item['record_num'])
+        res_item['hospitals'] = [HOSPITAL[hos] for hos in item['hospitals']]
+        res_item['record_num'] = [str(rec) for rec in item['record_num']]
         res_item['order_status'] = item['order_status']
         res_item['exec_status'] = item['exec_status']
         res_item['function'] = FUNCTION[item['func']]
         res_item['fixed_fee'] = str(item['fixed_fee'])
         res_item['security'] = item['security']
+        res_item['result'] = item['result']
         res.append(res_item)
 
     return jsonify(res)
@@ -150,17 +155,19 @@ def getOrders():
 
 @app.route('/api/balance', methods=['GET'])
 def getBalance():
-    deal_list = deal_col.find({'balance_done': 1})
+    deal_list = deal_col.find({'balance_done': 0})
     res = []
     for item in deal_list:
         res_item = {}
         res_item['service_id'] = str(item['service_id'])
         res_item['issue_time'] = item['issue_time']
-        res_item['hospitals'] = [str(hos) for hos in item['hospitals']]
+        res_item['hospitals'] = [HOSPITAL[hos] for hos in item['hospitals']]
         res_item['hospital_fee'] = [str(rec*0.5) for rec in item['record_num']]
         res_item['func_fee'] = str(item['func_fee'])
-        res_item['exec_fee'] = str(int(item['exec_sec'] * 2/3))
-        res_item['total_fee'] = str(item['fixed_fee'] + res_item['exec_fee'] + item['func_fee'])
+        res_item['exec_sec'] = str(item['exec_sec'])
+        exec_fee = int(item['exec_sec'] * 2/3)
+        res_item['exec_fee'] = str(exec_fee)
+        res_item['total_fee'] = str(item['fixed_fee'] + exec_fee + item['func_fee'])
         res.append(res_item)
     return jsonify(res)
 
@@ -169,17 +176,16 @@ def getBalance():
 def getData():
     filter = request.get_json()
     print(filter)
-    #add query builder 
+    #add query builder
     data_query = {'$and':[{'hospital': {'$in': filter['hospital']},
                     'department': {'$in': filter['department']},
                     'disease': {'$in': filter['disease']},
                     'sex': {'$in': filter['gender']},
                     'age_range': {'$in': filter['age_range']}}]}
-    #print(data_query)
+
     data_list = data_col.find(data_query)
     res = []
     for item in data_list:
-        #print(item)
         res_item = {}
         res_item['hospital'] = HOSPITAL[item['hospital']]
         res_item['department'] = DEPARTMENT[item['department']]
@@ -216,40 +222,51 @@ def postService():
     deal['hospital_permit'] = 0
     deal['patient_permit'] = 0
 
-    print(deal)
-
     deal_col.insert_one(deal)
 
-    #authorization and update exec_status
-    #deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':1}})
+    #wait for authorization
+    auth_pending_deal = deal_col.find({'service_id': service_id - 1})
+    while (auth_pending_deal[0]['exec_status'] != 1):
+        auth_pending_deal = deal_col.find({'service_id': service_id - 1})
+
+    print("Authorization compeleted, start invoking computing infrastructure.\n")
 
     if service['func'] == 0:
-        result = {}
+        result = {'type': 0}
+        func_id = 1
     if service['func'] == 3:
-        result = {}
+        result = {'type': 1}
+        func_id = 2
     if service['func'] == 5:
-        result = {}
-     
+        result = {'type': 2}
+        func_id = 3
 
     #execution
-    ok, exec_sec = call_func(service['func'])
-    if not ok:
-        print("calling function failed!\n")
-    else:
-        print("calling function succeed!\n")
-        deal_col.update_one({'service_id': service_id - 1}, {'$set': {'exec_status':0}})
-        deal_col.update_one({'service_id': service_id - 1}, {'$set': {'order_status':0}})
-        deal_col.update_one({'service_id': service_id - 1}, {'$set': {'balance_done':0}})
+    ok, exec_sec = call_func(func_id)
+    if ok == 0:
+        print('Calling function' + FUNCTION[service['func']] + 'succeed, time collapsed: ' + str(exec_sec) + '\n')
         res = {'$set': {'result': result}}
-        deal_col.update_one({'service_id': service_id - 1}, res)
+        deal_col.update({'service_id': service_id - 1}, {'$set': {'exec_status':0,
+                            'order_status':0,
+                            'balance_done':0,
+                            'exec_sec': exec_sec,
+                            'result': result}
+                            })
+    else:
+        print('Calling function' + FUNCTION[service['func']] + 'failed!\n')
 
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+    return json.dumps({'success':True})
 
 
 def call_func(id):
-    #calling sgx function
+    with grpc.insecure_channel('166.111.131.17:7666') as channel:
+        stub = sgx_pb2_grpc.SecureFuncStub(channel)
+        response = stub.SGXFunc(sgx_pb2.FuncId(value=id))
+        print("Secure function executed: " + str(response.value) + '.\n')
+    return 0, response.value
 
-    return 0, 30
+# def call_func(id):
+#     return 0, 10
 
 @app.route('/test',)
 def testRpc():
