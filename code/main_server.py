@@ -244,7 +244,7 @@ def postService():
     #execution
     ok, exec_sec = call_func(func_id)
     if ok == 0:
-        print('Calling function' + FUNCTION[service['func']] + 'succeed, time collapsed: ' + str(exec_sec) + '\n')
+        print('Calling function' + FUNCTION[service['func']] + ' succeed, time collapsed: ' + str(exec_sec) + '\n')
         res = {'$set': {'result': result}}
         deal_col.update({'service_id': service_id - 1}, {'$set': {'exec_status':0,
                             'order_status':0,
@@ -291,4 +291,4 @@ if __name__ == '__main__':
     # count = deal_col.delete_many({})
 
     # connect with sgx machine
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True)
